@@ -12,10 +12,22 @@ const Profile = () => {
         navigate('/');
     };
     return (
-        <div className='profile'>
-            <h2>Bienvenido a tu Perfil</h2>
-            <p>{user?.email}</p>
-            <button className="btn btn-primary p-6 m-4" onClick={handleLogout}>Cerrar Sesión</button>
+        <div className="profile-page">
+            <div className="profile-title">
+                <h1>Mi Perfil</h1>
+
+                <div className="profile-card">
+                    <img
+                        className='profile-foto'
+                        src={user?.foto || "/public/user.png"}
+                        alt="Foto de perfil"
+                    />
+                    <p>{user?.email}</p>
+                    <div className='profile-actions'>
+                        <button className="auth-btn" onClick={handleLogout}>Cerrar Sesión</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

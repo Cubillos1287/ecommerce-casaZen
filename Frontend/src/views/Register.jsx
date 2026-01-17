@@ -19,27 +19,34 @@ const Register = () => {
     };
 
     return (
-        <div className="register-container">
-            <h2>Crear Cuenta</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Registrarse</button>
-            </form>
+        <div className="auth-page">
+            <div className="auth-card">
+                <div className="auth-left">
+                    <div className="auth-title">
+                        <h2>Crear Cuenta</h2>
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                className="auth-input"
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                            <input
+                                className="auth-input"
+                                type="password"
+                                placeholder="Contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <button className="auth-btn" type="submit">Registrarse</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
-
 export default Register;

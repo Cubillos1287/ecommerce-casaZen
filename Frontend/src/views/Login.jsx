@@ -19,27 +19,35 @@ const Login = () => {
     };
 
     return (
-        <div className="login-container">
-            <h2>Iniciar Sesión</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Ingresar</button>
-            </form>
+        <div className="auth-page">
+            <div className="auth-card">
+                <div className="auth-left">
+                    <div className="auth-title">
+                        <h2>Iniciar Sesión</h2>
+                        <form onSubmit={handleSubmit}>
+
+                            <input
+                                className="auth-input"
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                            <input
+                                className="auth-input"
+                                type="password"
+                                placeholder="Contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                            <button className="auth-btn" type="submit">Ingresar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
-
 export default Login;
