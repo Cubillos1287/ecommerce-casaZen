@@ -1,70 +1,58 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-
   const [token, setToken] = useState(() => localStorage.getItem("token") || "");
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem("user");
     return stored ? JSON.parse(stored) : null;
   });
 
+  const isLogged = !!token;
+  const isAdmin = user?.role === "admin";
 
-  const login = async (email, password) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
+  // ✅ LOGIN con localStorage
+  const login = (email, password) => {
+    const storedUsers = JSON.parse(localStorage.getItem("users") || "[]");
 
+    const found = storedUsers.find(
+      (u) => u.email === email && u.password === password
+    );
 
-      if (!response.ok || !data.token || !data.user) {
-        return null;
-      }
+    if (!found) return null;
 
-      setToken(data.token);
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      return data;
-    } catch (error) {
-      console.error("Error al iniciar sesión:", error);
-      return null;
-    }
+    const fakeToken = `token_${Date.now()}`;
+    setToken(fakeToken);
+    setUser({ email: found.email, role: found.role });
+
+    localStorage.setItem("token", fakeToken);
+    localStorage.setItem("user", JSON.stringify({ email: found.email, role: found.role }));
+
+    return { token: fakeToken, user: { email: found.email, role: found.role } };
   };
 
+  // ✅ REGISTER con localStorage
+  const register = (email, password, role = "user") => {
+    const storedUsers = JSON.parse(localStorage.getItem("users") || "[]");
 
-  const register = async (email, password) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
+    const exists = storedUsers.some((u) => u.email === email);
+    if (exists) return null;
 
-      if (!response.ok || !data.token || !data.user) {
-        return null;
-      }
+    const newUser = { email, password, role };
+    const updated = [...storedUsers, newUser];
+    localStorage.setItem("users", JSON.stringify(updated));
 
-      setToken(data.token);
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      return data;
-    } catch (error) {
-      console.error("Error al registrarse:", error);
-      return null;
-    }
+    // auto-login al registrar
+    const fakeToken = `token_${Date.now()}`;
+    setToken(fakeToken);
+    setUser({ email, role });
+
+    localStorage.setItem("token", fakeToken);
+    localStorage.setItem("user", JSON.stringify({ email, role }));
+
+    return { token: fakeToken, user: { email, role } };
   };
-
 
   const logout = () => {
     setToken("");
@@ -73,35 +61,12 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-
-  const getProfile = async () => {
-    if (!token) return null;
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      if (response.ok && data) {
-        setUser(data);
-        localStorage.setItem("user", JSON.stringify(data));
-        return data;
-      }
-      return null;
-    } catch (error) {
-      console.error("Error al obtener perfil:", error);
-      return null;
-    }
-  };
-
   return (
-    <UserContext.Provider value={{ token, user, login, register, logout, getProfile }}>
+    <UserContext.Provider
+      value={{ token, user, isLogged, isAdmin, login, register, logout }}>
       {children}
     </UserContext.Provider>
   );
 };
 
-export default UserContext;
+export default UserProvider;
