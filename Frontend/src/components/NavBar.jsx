@@ -1,26 +1,38 @@
-import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
-const NavBar = () => {
-    const { logout } = useContext(UserContext);
-    const navigate = useNavigate();
+export default function Navbar() {
+    const { isLogged, isAdmin, logout } = useContext(UserContext);
 
     return (
         <nav className="navBar">
             <div className="nav-left">
-                <button className="logo" onClick={() => navigate('/')}>CasaZen</button>
+                <Link to="/" className="navLogo">CasaZen</Link>
             </div>
 
             <div className="nav-right">
-                <Link to="/login"><button className="nav-btn">Iniciar Sesión</button></Link>
-                <Link to="/register"><button className="nav-btn">Crear Cuenta</button></Link>
-                <Link to="/profile"><button className="nav-btn">Perfil</button></Link>
-                <Link to="/cart"><button className="nav-btn">Carrito</button></Link>
-                <button className="nav-btn" onClick={() => { logout(); navigate('/login'); }}>Cerrar Sesión</button>
+                {!isLogged && (
+                    <>
+                        <Link to="/login" className="nav">Iniciar Sesión</Link>
+                        <Link to="/register" className="nav">Crear Cuenta</Link>
+                    </>
+                )}
+
+                {isLogged && (
+                    <>
+                        {isAdmin && (
+                            <Link to="/mis-publicaciones" className="nav">Mis publicaciones</Link>
+                        )}
+                        <Link to="/profile" className="nav">Perfil</Link>
+                        <Link to="/cart" className="nav">Carrito</Link>
+
+                        <button type="button" className="nav logout-btn" onClick={logout}>
+                            Cerrar Sesión
+                        </button>
+                    </>
+                )}
             </div>
         </nav>
     );
-};
-
-export default NavBar;
+}

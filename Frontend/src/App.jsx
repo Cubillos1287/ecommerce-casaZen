@@ -8,7 +8,6 @@ const App = () => {
       <AppRouter />
     </UserProvider>
   );
-}
+};
 
 export default App;
-

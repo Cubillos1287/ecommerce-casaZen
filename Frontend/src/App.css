@@ -426,6 +426,9 @@
   font-size: 18px;
   transition: transform 0.1s;
   text-align: center;
+  padding: 15px;
+  margin-top: auto;
+
 }
 
 .cart-pay-btn:hover {

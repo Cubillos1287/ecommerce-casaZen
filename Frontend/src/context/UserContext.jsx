@@ -1,17 +1,18 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-
   const [token, setToken] = useState(() => localStorage.getItem("token") || "");
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem("user");
     return stored ? JSON.parse(stored) : null;
   });
 
+  const isLogged = !!token;
+  const isAdmin = user?.role === "admin";
 
-  const login = async (email, password) => {
+  const login = async (email) => {
     // MOCK: Simular petición POST /users/login
     console.log("Mock POST /users/login con:", email);
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -36,7 +37,7 @@ export const UserProvider = ({ children }) => {
     return { success: true, user: mockUser, token: mockToken };
   };
 
-  const register = async (email, password, name) => {
+  const register = async (email, name) => {
     // MOCK: Simular petición POST /users/register
     console.log("Mock POST /users/register con:", email, name);
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -65,19 +66,12 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-  const getProfile = async () => {
-    // MOCK: Simular petición GET /users/profile
-    // Header Authorization: Bearer <token>
-    if (!token) return null;
-    if (user) return user;
-    return null;
-  };
-
   return (
-    <UserContext.Provider value={{ token, user, login, register, logout, getProfile }}>
+    <UserContext.Provider
+      value={{ token, user, isLogged, isAdmin, login, register, logout }}>
       {children}
     </UserContext.Provider>
   );
 };
 
-export default UserContext;
+export default UserProvider;
