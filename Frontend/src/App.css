@@ -1,5 +1,5 @@
 :root {
-  --cz-bg: #f3eeea;
+  --cz-bg: #ffffff;
   /* fondo general beige */
   --cz-topbar: #dbaaa7;
   /* barra superior rosada */
@@ -16,17 +16,18 @@
 }
 
 /*Paginas Autentificacion LOGIN y REGISTER*/
+
+
 .auth-page {
-  min-height: 100vh;
-  background: var(--cz-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 32px 16px
+  min-height: calc(100vh - 60px);
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+  background: #fafafa;
 }
 
 .auth-card {
-  width: min (980px, 100%);
+  width: min(1200px, 100%);
   background: var(--cz-card);
   border-radius: var(--cz-radius);
   box-shadow: var(--cz-shadow);
@@ -45,12 +46,20 @@
   gap: 16px;
 }
 
+
 .auth-title {
   text-align: center;
   margin: 0 0 8px;
   font-size: 22px;
   font-weight: 700;
   color: #111;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
 }
 
 .auth-input {
@@ -83,61 +92,144 @@
   background: #ddd;
 }
 
-.auth-right img {
+.auth-right-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  min-height: 600px;
+  border-radius: 16px;
+  background-image: url("./assets/img/inicio.png");
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #e7e7e7;
 }
 
 .auth-slogan {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-10%, -50%);
-  font-size: 46px;
+  transform: translate(-50%, -50%);
+  font-size: 72px;
   font-weight: 800;
   color: #000;
   line-height: 1.05;
+  text-align: left;
+  width: 100%;
+  padding-left: 48px;
+  /* Optional: adds a bit of offset if width is full */
 }
 
 /* Pagina de PERFIL */
 .profile-page {
-  min-height: 100vh;
-  background: var(--cz-bg);
-  padding: 48px 16px
+  min-height: calc(100vh - 80px);
+  /* Adjust for navbar */
+  background: #fff;
+  /* White background as in screenshot */
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+  /* Center horizontally */
 }
 
-.profile-card {
-  margin: 0 auto;
-  width: min820px, 100%;
-  background: var(--cz-card);
-  border-radius: var(--cz-radius);
-  box-shadow: var(--cz-shadow);
-  padding: 48px 24px;
-  display: grid;
-  place-items: center;
-  gap: 18px;
+.profile-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.profile-title {
+.profile-header {
+  font-size: 42px;
+  font-weight: 900;
+  margin-bottom: 32px;
   text-align: center;
-  margin: 0 0 24px;
-  font-size: 40px;
-  font-weight: 800;
+  color: #000;
 }
 
-.profile-foto {
-  width: 92%;
-  height: 92%;
+.profile-card-custom {
+  background-color: #fff0f0;
+  /* Light pink background */
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  min-height: 480px;
+  /* Make it substantial */
+}
+
+.profile-avatar-container {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 999px;
 }
 
-.profile-actions {
+.profile-field {
+  width: 100%;
+  background: #e0e0e0;
+  /* Gray background for inputs */
+  border-radius: 12px;
+  /* Pill shape-ish */
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  color: #333;
+  font-weight: 500;
+  border: 1px solid #ccc;
+}
+
+.profile-field-text {
+  font-size: 16px;
+}
+
+.profile-actions-bottom {
+  margin-top: auto;
+  /* Push to bottom */
+  width: 100%;
   display: flex;
   justify-content: flex-end;
-  width: 100%;
+}
+
+.profile-edit-btn {
+  background-color: #a8dcab;
+  /* Custom green */
+  color: #1a4d1d;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.1s;
+}
+
+.profile-edit-btn:hover {
+  background-color: #92c995;
+  transform: scale(1.02);
+}
+
+@media (max-width: 820px) {
+  .profile-header {
+    font-size: 32px;
+  }
+
+  .profile-card-custom {
+    padding: 24px;
+  }
 }
 
 @media (max-width: 820px) {
@@ -156,4 +248,187 @@
   .profile-title {
     font-size: 32px;
   }
+}
+
+/* Pagina de REGISTER */
+.register-page {
+  min-height: calc(100vh - 80px);
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+  background: #fff;
+  /* White background */
+}
+
+.register-card {
+  width: min(1200px, 100%);
+  background: var(--cz-bg);
+  /* Default white */
+  border-radius: var(--cz-radius);
+  box-shadow: var(--cz-shadow);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* 50/50 split roughly */
+}
+
+/* Izquierda Register (FONDO ROSA) */
+.register-left {
+  background-color: #ffeded;
+  /* Pink background */
+  padding: 56px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Derecha Register (Igual a Auth Right pero asegurando estilos) */
+.register-right {
+  position: relative;
+  background: #ddd;
+}
+
+/* Reuse the image and slogan styles but scoped if needed, or just use the same classes */
+.register-right .auth-right-img {
+  /* Inherits from .auth-right-img global or we can duplicate if needed to ensure size */
+  height: 100%;
+  min-height: 600px;
+  background-image: url("./assets/img/fondo.png");
+}
+
+/* Specific inputs for register if needed to match prototype gray */
+.register-left .auth-input {
+  background: #c8c8c8;
+  /* Darker gray as per screenshot */
+}
+
+@media (max-width: 860px) {
+  .register-card {
+    grid-template-columns: 1fr;
+  }
+
+  .register-right {
+    display: none;
+  }
+}
+
+/* Pagina de CARRITO */
+.cart-page {
+  min-height: calc(100vh - 80px);
+  background: #fdfdfd;
+  padding: 40px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart-title {
+  font-size: 36px;
+  font-weight: 900;
+  margin-bottom: 40px;
+  text-align: center;
+  color: #000;
+}
+
+.cart-list {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cart-item {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+}
+
+.cart-item-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cart-item-info h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.cart-item-price {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.cart-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 12px;
+}
+
+.cart-control-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  font-weight: 900;
+  cursor: pointer;
+  color: #000;
+}
+
+.cart-summary {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.cart-total-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+  font-weight: 800;
+  color: #000;
+}
+
+.cart-pay-btn {
+  background-color: #a8dcab;
+  /* Custom green */
+  color: #1a4d1d;
+  width: 100%;
+  font-weight: 800;
+  padding: 14px 24px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.1s;
+  text-align: center;
+}
+
+.cart-pay-btn:hover {
+  background-color: #92c995;
+  transform: scale(1.02);
 }

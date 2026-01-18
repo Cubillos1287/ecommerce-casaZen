@@ -12,59 +12,51 @@ export const UserProvider = ({ children }) => {
 
 
   const login = async (email, password) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
+    // MOCK: Simular petición POST /users/login
+    console.log("Mock POST /users/login con:", email);
+    await new Promise(resolve => setTimeout(resolve, 500));
 
+    // Contract: Response 200 { "token": "String" }
+    // En el mock, asumimos que obtenemos el usuario también o lo sacamos del token decodificado ficticiamente
+    const mockToken = "mock-token-xyz-123";
 
-      if (!response.ok || !data.token || !data.user) {
-        return null;
-      }
+    // Simulating fetching profile immediately after login to have user data context
+    const mockUser = {
+      id: "user-123",
+      email: email,
+      name: "Henzo Terrez",
+      role: "user",
+      foto: "/user.png"
+    };
 
-      setToken(data.token);
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      return data;
-    } catch (error) {
-      console.error("Error al iniciar sesión:", error);
-      return null;
-    }
+    setToken(mockToken);
+    setUser(mockUser);
+    localStorage.setItem("token", mockToken);
+    localStorage.setItem("user", JSON.stringify(mockUser));
+    return { success: true, user: mockUser, token: mockToken };
   };
 
+  const register = async (email, password, name) => {
+    // MOCK: Simular petición POST /users/register
+    console.log("Mock POST /users/register con:", email, name);
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-  const register = async (email, password) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
+    // Contract: Response 201 { "id":..., "name":..., "email":... }
+    const mockUser = {
+      id: "user-new-456",
+      email: email,
+      name: name || "Nuevo Usuario",
+      role: "user",
+      foto: "/user.png"
+    };
+    const mockToken = "mock-token-abc-789"; // Usually register auto-logins
 
-      if (!response.ok || !data.token || !data.user) {
-        return null;
-      }
-
-      setToken(data.token);
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      return data;
-    } catch (error) {
-      console.error("Error al registrarse:", error);
-      return null;
-    }
+    setToken(mockToken);
+    setUser(mockUser);
+    localStorage.setItem("token", mockToken);
+    localStorage.setItem("user", JSON.stringify(mockUser));
+    return { success: true, user: mockUser, token: mockToken };
   };
-
 
   const logout = () => {
     setToken("");
@@ -73,28 +65,12 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-
   const getProfile = async () => {
+    // MOCK: Simular petición GET /users/profile
+    // Header Authorization: Bearer <token>
     if (!token) return null;
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      if (response.ok && data) {
-        setUser(data);
-        localStorage.setItem("user", JSON.stringify(data));
-        return data;
-      }
-      return null;
-    } catch (error) {
-      console.error("Error al obtener perfil:", error);
-      return null;
-    }
+    if (user) return user;
+    return null;
   };
 
   return (

@@ -1,16 +1,18 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-
+import NavBar from "../components/NavBar";
 const Register = () => {
     const { register } = useContext(UserContext);
     const navigate = useNavigate();
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await register(email, password);
+        // Pasa nombre al register (mock)
+        const result = await register(email, password, name);
         if (result) {
             navigate("/profile");
         } else {
@@ -19,12 +21,24 @@ const Register = () => {
     };
 
     return (
-        <div className="auth-page">
-            <div className="auth-card">
-                <div className="auth-left">
-                    <div className="auth-title">
-                        <h2>Crear Cuenta</h2>
-                        <form onSubmit={handleSubmit}>
+        <>
+            <NavBar />
+            <div className="register-page">
+                <div className="register-card">
+                    {/* Panel Izquierdo (Formulario) */}
+                    <div className="register-left">
+                        <div className="auth-title">
+                            <h2>Crear Cuenta</h2>
+                        </div>
+                        <form className="auth-form" onSubmit={handleSubmit}>
+                            <input
+                                className="auth-input"
+                                type="text"
+                                placeholder="Nombre"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
                             <input
                                 className="auth-input"
                                 type="email"
@@ -41,12 +55,20 @@ const Register = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                            <button className="auth-btn" type="submit">Registrarse</button>
+                            <button className="auth-btn" type="submit">Iniciar Sesión</button>
                         </form>
+                    </div>
+
+                    {/* Panel Derecho (Imagen) */}
+                    <div className="register-right" aria-hidden="true">
+                        <div className="auth-right-img" />
+                        <div className="auth-slogan">
+                            Espacios<br />simples,<br />vida<br />simple.
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 export default Register;

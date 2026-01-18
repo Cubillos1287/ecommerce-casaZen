@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const NavBar = () => {
+    const { logout } = useContext(UserContext);
     const navigate = useNavigate();
 
     return (
@@ -15,7 +17,7 @@ const NavBar = () => {
                 <Link to="/register"><button className="nav-btn">Crear Cuenta</button></Link>
                 <Link to="/profile"><button className="nav-btn">Perfil</button></Link>
                 <Link to="/cart"><button className="nav-btn">Carrito</button></Link>
-                <button className="nav-btn" onClick={() => { /* TODO: conectar logout desde context */ }}>Cerrar Sesión</button>
+                <button className="nav-btn" onClick={() => { logout(); navigate('/login'); }}>Cerrar Sesión</button>
             </div>
         </nav>
     );
