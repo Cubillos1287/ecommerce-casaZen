@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 
-import NavBar from '../components/NavBar';
+
 
 const Profile = () => {
     const { user } = useContext(UserContext);
@@ -11,7 +11,6 @@ const Profile = () => {
 
     return (
         <>
-            <NavBar />
             <div className="profile-page">
                 <div className="profile-container">
                     <h1 className="profile-header">Mi Perfil</h1>

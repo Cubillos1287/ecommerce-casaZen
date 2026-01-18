@@ -6,13 +6,14 @@ const BanioPage = () => {
     const bañoProductos = productos.filter((producto) => producto.categoria == "baño");
 
     return (
-        <div className="product-card">
+        <div className="category-grid">
             {bañoProductos.map((producto) => (
                 <ProductCard
                     key={producto.id}
                     img={producto.img}
                     nombre={producto.nombre}
                     descripcion={producto.descripcion}
+                    variant="horizontal"
                     precio={producto.precio}
                 />
             ))}

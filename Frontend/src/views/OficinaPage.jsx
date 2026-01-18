@@ -6,13 +6,14 @@ const OficinaPage = () => {
     const oficinaProductos = productos.filter((producto) => producto.categoria == "oficina");
 
     return (
-        <div className="product-card">
+        <div className="category-grid">
             {oficinaProductos.map((producto) => (
                 <ProductCard
                     key={producto.id}
                     img={producto.img}
                     nombre={producto.nombre}
                     descripcion={producto.descripcion}
+                    variant="horizontal"
                     precio={producto.precio}
                 />
             ))}

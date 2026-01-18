@@ -17,7 +17,9 @@ import Layout from "../Layout";
 export default function AppRouter() {
   return (
     <BrowserRouter>
+      {/* Routes define todas las rutas accesibles en la aplicación */}
       <Routes>
+        {/* Layout envuelve todas las rutas interiores, permitiendo tener Header y Footer fijos */}
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />

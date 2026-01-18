@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/NavBar";
+
 const Register = () => {
     const { register } = useContext(UserContext);
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Register = () => {
 
     return (
         <>
-            <NavBar />
+
             <div className="register-page">
                 <div className="register-card">
                     {/* Panel Izquierdo (Formulario) */}

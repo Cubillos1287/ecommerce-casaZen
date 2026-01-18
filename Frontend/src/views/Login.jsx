@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/NavBar";
+
 
 const Login = () => {
+    // Usamos el hook useContext para acceder a la función 'login' del UserContext
     const { login } = useContext(UserContext);
     const navigate = useNavigate();
+
+    // Estados locales para manejar los inputs del formulario
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -18,7 +21,7 @@ const Login = () => {
 
     return (
         <>
-            <NavBar />
+
             <main className="auth-page">
                 <div className="auth-card">
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "../components/NavBar";
+
 import sillaImg from "../assets/img/silla.png";
 import cestaImg from "../assets/img/cesta.png"; // Descomentar cuando tengas la imagen "cesta.png"
 
@@ -46,7 +46,7 @@ const CartPage = () => {
 
     return (
         <>
-            <NavBar />
+
             <div className="cart-page">
                 <h1 className="cart-title">Carrito de Compras</h1>
 

@@ -1,22 +1,30 @@
 import React from "react";
-import Header from "../components/Header";
 import ProductCard from "../components/ProductCard";
 import { productos } from "../data/products";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function HomePage() {
-  const [destacados] = useState(() => {
-    return [...productos].sort(() => Math.random() - 0.5);
-  });
+  // Estado local para guardar los productos destacados
+  const [destacados, setDestacados] = useState([]);
+
+  // Hook useEffect: Se ejecuta una vez al montar el componente (con el array vacío [])
+  // Aquí simulamos cargar los productos y desordenarlos aleatoriamente
+  useEffect(() => {
+    setDestacados([...productos].sort(() => Math.random() - 0.5));
+  }, []);
 
   return (
-    <div>
-      <Header />
+    <div className="home-page">
 
-      <div className="product-card">
+      {/* Hero Section */}
+      <div className="hero-section">
+        <div className="hero-content">
+          <h2>Espacios simples, vida simple.</h2>
+        </div>
+      </div>
 
+      <div className="products-container">
         {destacados.slice(0, 20).map((producto) => (
-
           <ProductCard
             key={producto.id}
             img={producto.img}
@@ -24,20 +32,11 @@ function HomePage() {
             descripcion={producto.descripcion}
             precio={producto.precio}
           />
-        ))
-        }
-
+        ))}
       </div>
     </div>
-  )
+  );
 };
-
-
-
-
-
-
-
 
 export default HomePage;
 
