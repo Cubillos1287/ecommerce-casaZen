@@ -1,13 +1,16 @@
 import { createContext, useState } from "react";
 
+// 1. Crear el Contexto
+// UserContext es el "almacén" que compartirá los datos con todos los componentes
 export const UserContext = createContext();
 
+// 2. Crear el Provider
+// UserProvider es el componente que "envuelve" la aplicación para proveer los datos
 export const UserProvider = ({ children }) => {
-  const [token, setToken] = useState(() => localStorage.getItem("token") || "");
-  const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem("user");
-    return stored ? JSON.parse(stored) : null;
-  });
+  // Estado para guardar el token de autenticación (string) y el usuario (objeto)
+  // Se inicializan leyendo localStorage para persistir la sesión al recargar
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
   const isLogged = !!token;
   const isAdmin = user?.role === "admin";
@@ -67,6 +70,8 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
+    // 3. Retornar el Context Provider con los valores que queremos compartir
+    // Value incluye estados (token, user) y funciones (login, register, logout)
     <UserContext.Provider
       value={{ token, user, isLogged, isAdmin, login, register, logout }}>
       {children}
