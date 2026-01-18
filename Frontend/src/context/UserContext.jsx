@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
       email: email,
       name: "Henzo Terrez",
       role: "user",
-      foto: "/user.png"
+      foto: null // Dejamos null para que use la imagen por defecto
     };
 
     setToken(mockToken);
@@ -51,7 +51,7 @@ export const UserProvider = ({ children }) => {
       email: email,
       name: name || "Nuevo Usuario",
       role: "user",
-      foto: "/user.png"
+      foto: null // Dejamos null para que use la imagen por defecto
     };
     const mockToken = "mock-token-abc-789"; // Usually register auto-logins
 

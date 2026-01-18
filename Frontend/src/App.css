@@ -168,14 +168,19 @@
   height: 140px;
   border-radius: 50%;
   overflow: hidden;
-  margin-bottom: 12px;
+  margin: 0 auto 12px auto;
+  /* Centered explicitly */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  /* Prevent squashing */
 }
 
 .profile-avatar {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  /* Remove bottom spacing */
 }
 
 .profile-field {
