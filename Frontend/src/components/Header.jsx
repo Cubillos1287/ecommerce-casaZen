@@ -7,7 +7,7 @@ const Header = () => {
 
   return (
     <header className="site-header">
-      {/* Top Bar: Pink Background */}
+      {/* Top Bar */}
       <div className="top-bar">
         <div className="container top-bar-content">
           <Link to="/" className="brand-logo">
@@ -38,9 +38,7 @@ const Header = () => {
               </div>
             )}
 
-            {/* Always show cart */}
             <Link to="/cart" className="cart-icon">
-              {/* Simple SVG Cart Icon */}
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="9" cy="21" r="1"></circle>
                 <circle cx="20" cy="21" r="1"></circle>
@@ -51,7 +49,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Nav Bar: White Background */}
+      {/* Nav Bar */}
       <div className="nav-bar">
         <nav className="container nav-links">
           <Link to="/cocina" className="nav-item">Cocina</Link>
