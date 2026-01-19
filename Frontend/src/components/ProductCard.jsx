@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 
-// Componente funcional que recibe Props desestructuradas
-// Esto permite reutilizar la misma tarjeta con diferente información (nombre, img, precio)
+
 const ProductCard = ({
   img,
   nombre,
   descripcion,
   precio,
-  buttonText = "Comprar", // Valor por defecto si no se envía la prop
+  buttonText = "Comprar", 
   buttonTo = "/pago",
   variant = "vertical" // Prop opcional para cambiar estilo
 }) => {

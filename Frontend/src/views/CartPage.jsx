@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 import sillaImg from "../assets/img/silla.png";
 import cestaImg from "../assets/img/cesta.png"; // Descomentar cuando tengas la imagen "cesta.png"
 
@@ -37,12 +37,12 @@ const CartPage = () => {
     // Calculate total
     const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-    const handlePay = () => {
+    //const handlePay = () => {
         // Navigates to the teammate's page (assuming '/pago')
         // navigate('/pago');
-        alert("Navegando a la página de pago (en construcción por compañera)");
+        //alert("Navegando a la página de pago (en construcción por compañera)");
         // window.location.href = "/pago"; // Uncomment if route exists
-    };
+    //};
 
     return (
         <>
@@ -74,7 +74,9 @@ const CartPage = () => {
                         <span>Total</span>
                         <span className="cart-total-amount">${total.toFixed(3)}</span>
                     </div>
-                    <button className="cart-pay-btn" onClick={handlePay}>Pagar</button>
+                    <Link to="/confirmacion">
+                        <button className="cart-pay-btn"ß>Pagar</button>
+                    </Link>
                 </div>
             </div>
         </>

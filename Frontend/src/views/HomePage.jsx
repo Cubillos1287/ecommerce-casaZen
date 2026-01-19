@@ -16,7 +16,6 @@ function HomePage() {
   return (
     <div className="home-page">
 
-      {/* Hero Section */}
       <div className="hero-section">
         <div className="hero-content">
           <h2>Espacios simples, vida simple.</h2>
