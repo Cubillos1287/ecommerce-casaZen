@@ -75,7 +75,7 @@ const CartPage = () => {
                         <span className="cart-total-amount">${total.toFixed(3)}</span>
                     </div>
                     <Link to="/confirmacion">
-                        <button className="cart-pay-btn"ß>Pagar</button>
+                        <button className="cart-pay-btn">Pagar</button>
                     </Link>
                 </div>
             </div>

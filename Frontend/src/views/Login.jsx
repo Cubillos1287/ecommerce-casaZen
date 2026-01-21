@@ -63,6 +63,7 @@ const Login = () => {
                             Espacios<br />simples,<br />vida<br />simple.
                         </div>
                     </div>
+                    
 
                 </div>
             </main>
