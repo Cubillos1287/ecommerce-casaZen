@@ -25,10 +25,11 @@ function HomePage() {
         {destacados.slice(0, 20).map((producto) => (
           <ProductCard
             key={producto.id}
+            id={producto.id}
             img={producto.img}
-            nombre={producto.nombre} // Backend sends 'name', mapped to 'nombre'
-            descripcion={producto.descripcion} // Backend sends 'description', mapped to 'descripcion'
-            precio={producto.precio} // Backend sends 'price', mapped to 'precio'
+            nombre={producto.nombre}
+            descripcion={producto.descripcion}
+            precio={producto.precio}
           />
         ))}
       </div>

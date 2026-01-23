@@ -1,4 +1,4 @@
-INSERT INTO products (id, name, price, description, img, stock, category) VALUES
+INSERT INTO products (id, nombre, precio, descripcion, img, stock, categoria) VALUES
 (1, 'Tabla de corte de bambú', 18, 'Resistente y ecológica, ideal para una cocina moderna.', '1.jpg', 10, 'cocina'),
 (2, 'Set de utensilios de madera', 24, 'Cocina con estilo natural todos los días.', '2.jpg', 10, 'cocina'),
 (3, 'Frascos de vidrio hermético', 9, 'Mantén tus alimentos frescos y ordenados.', '3.jpg', 10, 'cocina'),

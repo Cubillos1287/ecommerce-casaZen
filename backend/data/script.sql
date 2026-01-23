@@ -9,8 +9,9 @@ CREATE TABLE users (
 CREATE TABLE IF NOT EXISTS products (
   id SERIAL PRIMARY KEY,
   img VARCHAR(1000),
-  name VARCHAR(50),
-  price INT,
-  description VARCHAR(1000),
-  stock INT
+  nombre VARCHAR(50),
+  precio INT,
+  descripcion VARCHAR(1000),
+  stock INT,
+  categoria VARCHAR(50)
 );

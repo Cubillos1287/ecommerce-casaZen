@@ -6,18 +6,19 @@ const CocinaPage = () => {
     const { products } = useContext(ProductContext);
 
     // Filtramos usando la propiedad 'category' que viene de la BD
-    const cocinaProductos = products.filter((producto) => producto.category === "cocina");
+    const cocinaProductos = products.filter((producto) => producto.categoria === "cocina");
 
     return (
         <div className="category-grid">
             {cocinaProductos.map((producto) => (
                 <ProductCard
                     key={producto.id}
+                    id={producto.id}
                     img={producto.img}
-                    nombre={producto.nombre} // Backend: name -> nombre
-                    descripcion={producto.descripcion} // Backend: description -> descripcion
+                    nombre={producto.nombre}
+                    descripcion={producto.descripcion}
                     variant="horizontal"
-                    precio={producto.precio} // Backend: price -> precio
+                    precio={producto.precio}
                 />
             ))}
         </div>
