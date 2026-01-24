@@ -460,7 +460,7 @@ ul {
   text-decoration: none;
 }
 
-.brand-logo  h1 {
+.brand-logo h1 {
   margin: 0;
   font-size: 24px;
   font-weight: 800;
@@ -540,8 +540,8 @@ ul {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;            
-  height: 70%;    
+  width: 90%;
+  height: 70%;
   min-height: 80px;
   color: rgb(9, 9, 9);
   text-align: center;
@@ -614,7 +614,7 @@ ul {
   text-align: center;
   background-color: #A8DCAB;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold; 
+  font-weight: bold;
   transition: background-color 0.2s;
   color: black;
   text-align: center;
@@ -622,12 +622,13 @@ ul {
   border-radius: 25px;
   text-decoration: none;
   box-sizing: border-box;
+  border: none;
 }
 
 
-.btn-primary:hover{
+.btn-primary:hover {
   background-color: #7CC47C;
-  color:black;
+  color: black;
   transition: 0.3s;
   border-radius: 25px;
   padding: 10px 12px;
@@ -653,7 +654,7 @@ ul {
   }
 
   .card {
-    max-width: 340px; /* opcional, se ve más prolijo */
+    max-width: 340px;
   }
 }
 
@@ -692,7 +693,7 @@ ul {
   gap: 24px;
   width: 100%;
   max-width: 1000px;
-  margin: 30px auto ;
+  margin: 30px auto;
   padding: 0 16px;
 }
 
@@ -711,7 +712,7 @@ ul {
 }
 
 .card.horizontal .card-image {
-  width: 40%;  
+  width: 40%;
   height: auto;
   min-height: 220px;
   object-fit: cover;
@@ -737,7 +738,7 @@ ul {
 }
 
 .card.horizontal .card-precio {
-  margin: 14px 0 14px 14px; 
+  margin: 14px 0 14px 14px;
   font-size: 18px;
   height: 20px;
 
@@ -778,7 +779,7 @@ ul {
 
 /* --- CSS PAGO PAGE  --- */
 .container-pago {
-  min-height:688px;
+  min-height: 688px;
   background-color: #f7f7f7;
   display: flex;
   justify-content: center;
