@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import sillaImg from "../assets/img/silla.png";
-import cestaImg from "../assets/img/cesta.png"; // Descomentar cuando tengas la imagen "cesta.png"
-
+import sillaImg from "../assets/imgs/silla.png";
+import cestaImg from "../assets/imgs/17.jpg";
 const CartPage = () => {
     // Mock data matching the screenshot
     const [cartItems, setCartItems] = useState([
