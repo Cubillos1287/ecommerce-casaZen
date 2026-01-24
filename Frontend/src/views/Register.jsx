@@ -23,7 +23,7 @@ const Register = () => {
     return (
         <>
 
-            <div className="register-page">
+            <main className="register-page">
                 <div className="register-card">
                     {/* Panel Izquierdo (Formulario) */}
                     <div className="register-left">
@@ -55,7 +55,7 @@ const Register = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-                            <button className="auth-btn" type="submit">Iniciar Sesión</button>
+                            <button className="auth-btn" type="submit">Crear Cuenta</button>
                         </form>
                     </div>
 
@@ -67,7 +67,7 @@ const Register = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
         </>
     );
 };

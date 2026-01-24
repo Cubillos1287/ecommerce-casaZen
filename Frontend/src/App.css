@@ -1,40 +1,52 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.app-container{
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+} */
+ 
 :root {
-  --cz-bg: #ffffff;
-  /* fondo general beige */
-  --cz-topbar: #dbaaa7;
-  /* barra superior rosada */
   --cz-card: #ffeded;
-  /* panel rosado */
   --cz-input: #9e9e9e;
-  /* inputs grises */
   --cz-input-text: #2b2b2b;
   --cz-primary: #a8dcab;
-  /* botón verde pastel */
   --cz-primary-hover: #95c89a;
-  --cz-shadow: 0 12px 28px rgba(0, 0, 0, .12);
-  --cz-radius: 18px;
-}
+} 
+
 
 /*Paginas Autentificacion LOGIN y REGISTER*/
 
-
 .auth-page {
-  min-height: calc(100vh - 60px);
+  min-height: 740px;
   display: grid;
   place-items: center;
   padding: 28px 16px;
   background: #fafafa;
+  border-radius: 8px;
 }
 
 .auth-card {
   width: min(1200px, 100%);
   background: var(--cz-card);
-  border-radius: var(--cz-radius);
-  box-shadow: var(--cz-shadow);
+  border-radius: 8px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1.05fr 1fr;
-  /* 1.05 parte izquierda form, 1 parte derecha imagen */
 }
 
 /* parte izquierda PANEL FORMULARIO*/
@@ -66,68 +78,70 @@
   width: 100%;
   border: none;
   outline: none;
-  background: var(--cz-input);
+  background: #c8c8c8;
   padding: 14px 18px;
-  border-radius: 999px;
+  border-radius: 35px;
   font-size: 14px;
   color: var(--cz-input-text);
 }
 
 .auth-btn {
   width: 100%;
-  border: none;
-  background: var(--cz-primary);
-  padding: 14px 18px;
-  border-radius: 999px;
+  background: #A8DCAB;
+  padding: 8px ;
+  border-radius: 35px;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 600;
+  border: none;
 }
 
 .auth-btn:hover {
-  background: var(--cz-primary-hover);
+  background: #7CC47C;
 }
 
 /* parte derecha PANEL IMAGEN*/
 .auth-right {
   position: relative;
-  background: #ddd;
 }
 
 .auth-right-img {
   width: 100%;
   height: 100%;
   min-height: 600px;
-  border-radius: 16px;
-  background-image: url("./assets/img/inicio.png");
+  background-image: url("./assets/imgs/inicio.jpg");
   background-size: cover;
   background-position: center;
-  border: 1px solid #e7e7e7;
 }
 
 .auth-slogan {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 72px;
-  font-weight: 800;
+  font-size: 60px;
+  background-color: #09090931;
   color: #000;
-  line-height: 1.05;
-  text-align: left;
-  width: 100%;
+  font-family: "Archivo Black", sans-serif;
+  width: 90%;
+  height: 80%;    
+  min-height: 80px;
   padding-left: 48px;
-  /* Optional: adds a bit of offset if width is full */
+  border-radius: 8px;
 }
+
+ 
 
 /* Pagina de PERFIL */
 .profile-page {
   min-height: calc(100vh - 80px);
-  /* Adjust for navbar */
   background: #fff;
-  /* White background as in screenshot */
   padding: 40px 16px;
   display: flex;
   justify-content: center;
-  /* Center horizontally */
 }
 
 .profile-container {
@@ -148,7 +162,6 @@
 
 .profile-card-custom {
   background-color: #fff0f0;
-  /* Light pink background */
   width: 100%;
   max-width: 500px;
   border-radius: 20px;
@@ -160,7 +173,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   position: relative;
   min-height: 480px;
-  /* Make it substantial */
 }
 
 .profile-avatar-container {
@@ -169,10 +181,8 @@
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto 12px auto;
-  /* Centered explicitly */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
-  /* Prevent squashing */
 }
 
 .profile-avatar {
@@ -180,15 +190,12 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  /* Remove bottom spacing */
 }
 
 .profile-field {
   width: 100%;
   background: #e0e0e0;
-  /* Gray background for inputs */
   border-radius: 12px;
-  /* Pill shape-ish */
   padding: 12px 20px;
   display: flex;
   align-items: center;
@@ -211,8 +218,7 @@
 
 .profile-edit-btn {
   background-color: #a8dcab;
-  /* Custom green */
-  color: #1a4d1d;
+  color: #000;
   font-weight: 700;
   padding: 10px 24px;
   border-radius: 999px;
@@ -223,7 +229,7 @@
 }
 
 .profile-edit-btn:hover {
-  background-color: #92c995;
+  background-color: #7CC47C;
   transform: scale(1.02);
 }
 
@@ -256,31 +262,26 @@
 }
 
 /* Pagina de REGISTER */
+
 .register-page {
   min-height: calc(100vh - 80px);
   display: grid;
   place-items: center;
   padding: 28px 16px;
-  background: #fff;
-  /* White background */
 }
 
 .register-card {
   width: min(1200px, 100%);
-  background: var(--cz-bg);
-  /* Default white */
-  border-radius: var(--cz-radius);
-  box-shadow: var(--cz-shadow);
+  background-color: #ffeded;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* 50/50 split roughly */
+  border-radius: 8px;
 }
 
 /* Izquierda Register (FONDO ROSA) */
 .register-left {
-  background-color: #ffeded;
-  /* Pink background */
   padding: 56px 64px;
   display: flex;
   flex-direction: column;
@@ -288,24 +289,17 @@
   gap: 16px;
 }
 
-/* Derecha Register (Igual a Auth Right pero asegurando estilos) */
 .register-right {
   position: relative;
-  background: #ddd;
 }
 
-/* Reuse the image and slogan styles but scoped if needed, or just use the same classes */
 .register-right .auth-right-img {
-  /* Inherits from .auth-right-img global or we can duplicate if needed to ensure size */
-  height: 100%;
-  min-height: 600px;
-  background-image: url("./assets/img/fondo.png");
+  background-image: url("./assets/imgs/fondo.jpg");
 }
 
-/* Specific inputs for register if needed to match prototype gray */
-.register-left .auth-input {
+/* .register-left .auth-input {
   background: #c8c8c8;
-}
+} */
 
 @media (max-width: 860px) {
   .register-card {
@@ -418,51 +412,30 @@
 }
 
 .cart-pay-btn {
-  background-color: #a8dcab;
-  /* Custom green */
-  color: #1a4d1d;
   width: 100%;
-  font-weight: 800;
-  padding: 14px 24px;
-  border-radius: 999px;
+  background-color: #a8dcab;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  padding: 15px 24px;
+  border-radius: 35px;
   border: none;
   cursor: pointer;
-  font-size: 18px;
-  transition: transform 0.1s;
+  font-size: 20px;
   text-align: center;
-  padding: 15px;
-  margin-top: auto;
-
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .cart-pay-btn:hover {
-  background-color: #92c995;
+  background-color: #7CC47C;
   transform: scale(1.02);
 }
 
-/* Global Clean up */
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: var(--cz-bg);
+.cart-summary a {
+  width: 100%;
+  display: block;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
 
 /* --- HEADER --- */
 .site-header {
@@ -473,7 +446,7 @@ ul {
 
 /* Top Bar (Pink) */
 .top-bar {
-  background-color: var(--cz-topbar);
+  background-color: #dbaaa7;
   padding: 12px 0;
 }
 
@@ -573,7 +546,7 @@ ul {
   color: rgb(9, 9, 9);
   text-align: center;
   font-family: "Archivo Black", sans-serif;
-  background-color: #09090942;
+  background-color: #09090931;
   border-radius: 10px;
 }
 
@@ -586,11 +559,9 @@ ul {
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 16px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  justify-content: center;
-  /* or flex-start */
 }
 
 /* CSS PRODUCT CARD */
@@ -598,8 +569,7 @@ ul {
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
-  width: 280px;
-  /* Fixed width or flex-basis */
+  width: 100%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s;
   display: flex;
@@ -612,9 +582,10 @@ ul {
 
 .card-image {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  background-color: #f9f9f9;
+  height: 260px;       
+  object-fit: cover;  
+  object-position: center;
+   background-color: #f9f9f9;
 }
 
 .card-nombre {
@@ -664,6 +635,29 @@ ul {
 
 }
 
+@media (max-width: 1200px) {
+  .products-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .products-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .products-container {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .card {
+    max-width: 340px;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero-content h2 {
@@ -705,8 +699,7 @@ ul {
 
 @media (min-width: 900px) {
   .category-grid {
-    grid-template-columns: 1fr 1fr;
-    /* 2 columnas en pantallas grandes */
+    grid-template-columns: 1fr 1fr ;
   }
 }
 
@@ -757,29 +750,20 @@ ul {
   flex-direction: column;
   padding: 14px;
   width: 100%;
-}
-
-.card.vertical {
-  height: 420px;
-
+  height: 100%; 
 
 }
 
-.card.vertical .card-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
 
 
 .card.vertical .card-nombre {
-  height: 20px;
-  margin: 20px 0 0;
+  height: 25px;
+  margin: 20px 0 20px 0;
 
 }
 
 .card.vertical .card-descripcion {
-  margin: 15px 0 0;
+  margin: 0 0 20px 0;
   font-size: 14px;
 }
 
@@ -789,10 +773,6 @@ ul {
   height: 20px;
 
 }
-
-
-
-
 
 
 
@@ -831,6 +811,27 @@ ul {
   margin-bottom: 32px;
 }
 
+.incio-btn {
+  background-color: #a8dcab;
+  text-decoration: none;
+  color: #000;
+  border-radius: 35px;
+  padding: 10px 40px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.1s;
+  display: inline-block;
+  min-width: 160px;
+
+}
+
+.incio-btn:hover {
+  background-color: #7CC47C;
+  transform: scale(1.05);
+  opacity: 0.9; 
+}
+
 .auth-links {
   display: flex;
   justify-content: center;
@@ -843,7 +844,7 @@ ul {
 .login-btn-custom,
 .register-btn-custom {
   padding: 12px 32px;
-  border-radius: 999px;
+  border-radius: 35px;
   font-weight: 700;
   font-size: 16px;
   color: #000;
@@ -857,9 +858,19 @@ ul {
   background-color: #a8dcab;
 }
 
+.login-btn-custom:hover {
+  background-color: #7CC47C;
+}
+
 .register-btn-custom {
   background-color: #df9e9b;
 }
+
+
+.register-btn-custom:hover {
+  background-color: #eea7a4;
+}
+
 
 .login-btn-custom:hover,
 .register-btn-custom:hover {

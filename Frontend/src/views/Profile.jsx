@@ -1,25 +1,22 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 const Profile = () => {
     const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
-    // Fallback display if user is null (though mock login should prevent this)
-    // Si no hay usuario, redirigir al login o mostrar enlace
+   useEffect(() => {
     if (!user) {
-        return (
-            <div className="profile-page">
-                <div className="profile-container">
-                    <h2>Debes iniciar sesión para ver tu perfil</h2>
-                    <br />
-                    <a href="/login" className="btn-primary">Ir al Login</a>
-                </div>
-            </div>
-        );
+      navigate("/"); // Redirige a la página de inicio si no hay usuario
     }
+  }, [user, navigate]);
 
+  if (!user) return null; // evita que se renderice el mensaje
+
+  
     return (
         <>
             <div className="profile-page">
@@ -55,4 +52,6 @@ const Profile = () => {
         </>
     );
 };
+
+
 export default Profile;
