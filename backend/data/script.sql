@@ -1,9 +1,11 @@
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(50) NOT NULL,
-  password VARCHAR(60) NOT NULL,
-  rol VARCHAR(25),
-  lenguage VARCHAR(25)
+CREATE TABLE IF NOT EXISTS users
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password_hash text NOT NULL,
+    created_at timestamp NOT NULL DEFAULT now(),
+	UNIQUE (email)
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -14,4 +16,18 @@ CREATE TABLE IF NOT EXISTS products (
   descripcion VARCHAR(1000),
   stock INT,
   categoria VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS cart (
+  id SERIAL PRIMARY KEY,
+  user_id INT,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS cart_items (
+  id SERIAL PRIMARY KEY,
+  cart_id INT,
+  product_id INT,
+  quantity INT,
+  FOREIGN KEY (cart_id) REFERENCES cart(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
 );
