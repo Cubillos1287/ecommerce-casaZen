@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "825e32ba-44d5-4ca8-81d5-346a9a148a5a",
+		"name": "EcommerceCasaZen",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40081907"
+	},
+	"item": [
+		{
+			"name": "productoPorCategoria",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/productos/categoria/cocina",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"productos",
+						"categoria",
+						"cocina"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "productoPorId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/productos/7",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"productos",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "carritoPorUsuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/carrito/usuario/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"carrito",
+						"usuario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agregarProductoAlCarrito",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cartId\":1,\n    \"productId\": 6\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/carrito/agregar",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"carrito",
+						"agregar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "eliminarProductoAlCarrito",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cartId\": 1,\n    \"productId\": 16\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/carrito/eliminar",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"carrito",
+						"eliminar"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": ""
+		}
+	]
+}
