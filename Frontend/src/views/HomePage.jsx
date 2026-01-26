@@ -11,6 +11,8 @@ function HomePage() {
       setDestacados([...products].sort(() => Math.random() - 0.5));
     }
   }, [products]);
+  console.log("products:", products);
+
 
   return (
     <div className="home-page">

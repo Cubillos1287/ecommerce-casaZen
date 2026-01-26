@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
 const Header = () => {
-  const { isLogged, isAdmin, logout } = useContext(UserContext);
+  const { isLogged, logout, user } = useContext(UserContext);
 
   return (
     <header className="site-header">
@@ -17,25 +17,35 @@ const Header = () => {
           <div className="top-bar-actions">
             {!isLogged ? (
               <>
-                <Link to="/login" className="auth-link">Iniciar Sesion</Link>
+                <Link to="/login" className="auth-link">Iniciar Sesión</Link>
                 <Link to="/register" className="auth-link">Crear cuenta</Link>
               </>
             ) : (
               <>
-                {isAdmin && (
-                  <Link to="/mis-publicaciones" className="auth-link">Mis publicaciones</Link>
-                )}
                 <Link to="/profile" className="auth-link">Perfil</Link>
-                <button type="button" className="auth-link logout-btn-text" onClick={logout} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, font: 'inherit' }}>
+                <Link to="/favorites" className="auth-link">Favoritos</Link>
+
+
+                <button
+                  type="button"
+                  className="auth-link logout-btn-text"
+                  onClick={logout}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: 0,
+                    font: "inherit",
+                  }}
+                >
                   Cerrar Sesión
                 </button>
-              </>
-            )}
 
-            {isLogged && (
-              <div className="user-controls">
-                {/* Logic for user controls if needed separately */}
-              </div>
+                {/* opcional: mostrar email */}
+                <span className="auth-link" style={{ cursor: "default" }}>
+                  {user?.email}
+                </span>
+              </>
             )}
 
             <Link to="/cart" className="cart-icon">

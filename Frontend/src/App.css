@@ -30,8 +30,9 @@ ul {
 
 /*Paginas Autentificacion LOGIN y REGISTER*/
 
+
 .auth-page {
-  min-height: 740px;
+  min-height: calc(100vh - 80px);
   display: grid;
   place-items: center;
   padding: 28px 16px;
@@ -105,6 +106,8 @@ ul {
   position: relative;
 }
 
+
+
 .auth-right-img {
   width: 100%;
   height: 100%;
@@ -113,6 +116,7 @@ ul {
   background-size: cover;
   background-position: center;
 }
+
 
 .auth-slogan {
   display: flex;
@@ -779,7 +783,7 @@ ul {
 
 /* --- CSS PAGO PAGE  --- */
 .container-pago {
-  min-height: 688px;
+  min-height: calc(100vh - 80px);
   background-color: #f7f7f7;
   display: flex;
   justify-content: center;

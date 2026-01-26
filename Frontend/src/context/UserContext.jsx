@@ -1,65 +1,108 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
-// 1. Crear el Contexto
-// UserContext es el "almacén" que compartirá los datos con todos los componentes
 export const UserContext = createContext();
 
-// 2. Crear el Provider
-// UserProvider es el componente que "envuelve" la aplicación para proveer los datos
 export const UserProvider = ({ children }) => {
-  // Estado para guardar el token de autenticación (string) y el usuario (objeto)
-  // Se inicializan leyendo localStorage para persistir la sesión al recargar
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem("user");
+    return saved ? JSON.parse(saved) : null;
+  });
 
-  const isLogged = !!token;
-  const isAdmin = user?.role === "admin";
+  // Mantener token/user sincronizados con localStorage
+  useEffect(() => {
+    if (token) localStorage.setItem("token", token);
+    else localStorage.removeItem("token");
 
-  const login = async (email) => {
-    // MOCK: Simular petición POST /users/login
-    console.log("Mock POST /users/login con:", email);
-    await new Promise(resolve => setTimeout(resolve, 500));
+    if (user) localStorage.setItem("user", JSON.stringify(user));
+    else localStorage.removeItem("user");
+  }, [token, user]);
 
-    // Contract: Response 200 { "token": "String" }
-    // En el mock, asumimos que obtenemos el usuario también o lo sacamos del token decodificado ficticiamente
-    const mockToken = "mock-token-xyz-123";
+  // Si hay token, traer el usuario real desde /me
+  useEffect(() => {
+    const getMe = async () => {
+      if (!token) return;
 
-    // Simulating fetching profile immediately after login to have user data context
-    const mockUser = {
-      id: "user-123",
-      email: email,
-      name: "Henzo Terrez",
-      role: "user",
-      foto: null // Dejamos null para que use la imagen por defecto
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Si el token no sirve, cerramos sesión
+        if (!res.ok) {
+          setToken("");
+          setUser(null);
+          return;
+        }
+
+        const data = await res.json();
+        setUser(data.user); 
+      } catch (error) {
+        console.log("Error /me:", error);
+      }
     };
 
-    setToken(mockToken);
-    setUser(mockUser);
-    localStorage.setItem("token", mockToken);
-    localStorage.setItem("user", JSON.stringify(mockUser));
-    return { success: true, user: mockUser, token: mockToken };
+    getMe();
+  }, [token]);
+
+  //  LOGIN
+  const login = async ( email, password) => {
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+           email: email.trim(), 
+           password: password.trim() ,
+          }),
+      });
+
+      const data = await res.json();
+
+      console.log("LOGIN status:", res.status);
+      console.log("LOGIN response:", data);
+
+      if (!res.ok) {
+        alert(data.message || data.error || "Error al iniciar sesión");
+        return null;
+      }
+
+      //  Ajusta según lo que nuestro backend devuelva
+      setToken(data.token );
+      setUser(data.user );
+
+      return data;
+
+    } catch (error) {
+      console.log("Error login:", error);
+      return null;
+    }
   };
 
-  const register = async (email, name) => {
-    // MOCK: Simular petición POST /users/register
-    console.log("Mock POST /users/register con:", email, name);
-    await new Promise(resolve => setTimeout(resolve, 500));
+  // REGISTER
+  const register = async (email, password, name = "") => {
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
 
-    // Contract: Response 201 { "id":..., "name":..., "email":... }
-    const mockUser = {
-      id: "user-new-456",
-      email: email,
-      name: name || "Nuevo Usuario",
-      role: "user",
-      foto: null // Dejamos null para que use la imagen por defecto
-    };
-    const mockToken = "mock-token-abc-789"; // Usually register auto-logins
+      const data = await res.json();
 
-    setToken(mockToken);
-    setUser(mockUser);
-    localStorage.setItem("token", mockToken);
-    localStorage.setItem("user", JSON.stringify(mockUser));
-    return { success: true, user: mockUser, token: mockToken };
+      if (!res.ok) {
+        alert(data.message || data.error || "Error al registrarse");
+        return null;
+      }
+
+      setToken(data.token || "");
+      setUser(data.user || null);
+
+      return data;
+    } catch (error) {
+      console.log("Error register:", error);
+      return null;
+    }
   };
 
   const logout = () => {
@@ -69,14 +112,21 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
+  const isLogged = !!token;
+
   return (
-    // 3. Retornar el Context Provider con los valores que queremos compartir
-    // Value incluye estados (token, user) y funciones (login, register, logout)
     <UserContext.Provider
-      value={{ token, user, isLogged, isAdmin, login, register, logout }}>
+      value={{
+        token,
+        user,
+        isLogged,
+        login,
+        register,
+        logout,
+        setUser, 
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
 };
-
-export default UserProvider;

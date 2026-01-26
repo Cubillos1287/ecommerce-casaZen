@@ -1,74 +1,106 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-
 const Login = () => {
-    // Usamos el hook useContext para acceder a la función 'login' del UserContext
-    const { login } = useContext(UserContext);
-    const navigate = useNavigate();
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    // Estados locales para manejar los inputs del formulario
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const result = await login(email, password);
-        if (result) navigate("/profile");
-        else alert("Error al iniciar sesión");
-    };
+    // 1️⃣ Campos vacíos
+    if (!email.trim() || !password.trim()) {
+      return Swal.fire({
+        title: "¡Campos vacíos!",
+        text: "Todos los campos son obligatorios",
+        icon: "error",
+        confirmButtonText: "Entendido",
+      });
+    }
 
-    return (
-        <>
+    // 2️⃣ Password corto
+    if (password.length < 6) {
+      return Swal.fire({
+        title: "¡Contraseña débil!",
+        text: "La contraseña debe tener al menos 6 caracteres.",
+        icon: "warning",
+        confirmButtonText: "Entendido",
+      });
+    }
 
-            <main className="auth-page">
-                <div className="auth-card">
+    // 3️⃣ Intentar login
+    const user = await login(email, password);
 
-                    {/* Panel Izquierdo */}
-                    <div className="auth-left">
-                        <div className="auth-title">
-                            <h2>Iniciar Sesión</h2>
+    // 4️⃣ Resultado
+    if (user) {
+      Swal.fire({
+        title: "¡Bienvenida!",
+        text: "Inicio de sesión exitoso",
+        icon: "success",
+        confirmButtonText: "Continuar",
+      }).then(() => {
+        navigate("/profile");
+      });
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "Email o contraseña incorrectos",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
 
-                            <form className="auth-form" onSubmit={handleSubmit}>
-                                <input
-                                    className="auth-input"
-                                    type="email"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
+  return (
+    <>
+      <main className="auth-page">
+        <div className="auth-card">
+          {/* Panel Izquierdo */}
+          <div className="auth-left">
+            <div className="auth-title">
+              <h2>Iniciar Sesión</h2>
 
-                                <input
-                                    className="auth-input"
-                                    type="password"
-                                    placeholder="Contraseña"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
+              <form className="auth-form" onSubmit={handleSubmit}>
+                <input
+                  className="auth-input"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
 
-                                <button className="auth-btn" type="submit">
-                                    Ingresar
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                <input
+                  className="auth-input"
+                  type="password"
+                  placeholder="Contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
 
-                    {/* Panel Derecho */}
-                    <div className="auth-right" aria-hidden="true">
-                        <div className="auth-right-img" />
-                        <div className="auth-slogan">
-                            Espacios<br />simples,<br />vida<br />simple.
-                        </div>
-                    </div>
-                    
+                <button className="auth-btn" type="submit">
+                  Ingresar
+                </button>
+              </form>
+            </div>
+          </div>
 
-                </div>
-            </main>
-        </>
-    );
+          {/* Panel Derecho */}
+          <div className="auth-right" aria-hidden="true">
+            <div className="auth-right-img" />
+            <div className="auth-slogan">
+              Espacios<br />simples,<br />vida<br />simple.
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
+  );
 };
 
 export default Login;

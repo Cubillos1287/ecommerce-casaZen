@@ -12,6 +12,7 @@ import OficinaPage from "../views/OficinaPage";
 import DecoracionPage from "../views/DecoracionPage";
 import PagoPage from "../views/PagoPage";
 import ConfirmacionPage from "../views/ConfirmacionPage";
+import FavoritosPage from "../views/FavoritosPage";
 import Layout from "../Layout";
 
 export default function AppRouter() {
@@ -27,13 +28,14 @@ export default function AppRouter() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<CartPage />} />
 
-          {/* Teammate's new routes */}
+          
           <Route path="/cocina" element={<CocinaPage />} />
           <Route path="/cuarto" element={<CuartoPage />} />
           <Route path="/baño" element={<BanioPage />} />
           <Route path="/oficina" element={<OficinaPage />} />
           <Route path="/decoracion" element={<DecoracionPage />} />
           <Route path="/pago" element={<PagoPage />} />
+          <Route path="/favorites" element={<FavoritosPage />} />
           <Route path="/confirmacion" element={<ConfirmacionPage />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
