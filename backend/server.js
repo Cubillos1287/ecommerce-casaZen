@@ -13,13 +13,13 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
-app.use(productRoutes);
 app.use("/api/auth", authRoutes)
+app.use("/api/productos", productRoutes);
+app.use("/api/carrito", cartRoutes);
 
 
 
-app.get("/" , (req, res) => res.send ("API OK "));
-app.use(cartRoutes);
+app.get("/", (req, res) => res.send("API OK "));
 
 app.listen(PORT, () => {
     console.log(`Servidor encendido en el puerto ${PORT}`);

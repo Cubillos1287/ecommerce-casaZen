@@ -7,16 +7,102 @@
 	},
 	"item": [
 		{
+			"name": "Registrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Daniela Cubillos\",\n    \"email\": \"cubillos1287@gmail.com\",\n    \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/auth/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"cubillos1287@gmail.com\",\n    \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/auth/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "me",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJjdWJpbGxvczEyODdAZ21haWwuY29tIiwiaWF0IjoxNzY5Mzk2MDYzLCJleHAiOjE3NjkzOTk2NjN9.uO_vn7EEISe8XxVxBBfA9Qjvij2NtDpdc5vlFUAkBNU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/auth/me",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "productoPorCategoria",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/productos/categoria/cocina",
+					"raw": "{{host}}/api/productos/categoria/cocina",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"api",
 						"productos",
 						"categoria",
 						"cocina"
@@ -31,11 +117,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/productos/7",
+					"raw": "{{host}}/api/productos/7",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"api",
 						"productos",
 						"7"
 					]
@@ -49,14 +136,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/carrito/usuario/1",
+					"raw": "{{host}}/api/carrito",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"carrito",
-						"usuario",
-						"1"
+						"api",
+						"carrito"
 					]
 				}
 			},
@@ -69,7 +155,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"cartId\":1,\n    \"productId\": 6\n}",
+					"raw": "{\n    \"cartId\":2,\n    \"productId\": 7\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -77,11 +163,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/carrito/agregar",
+					"raw": "{{host}}/api/carrito/agregar",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"api",
 						"carrito",
 						"agregar"
 					]
@@ -96,7 +183,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"cartId\": 1,\n    \"productId\": 16\n}",
+					"raw": "{\n    \"cartId\": 2,\n    \"productId\": 7\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -104,11 +191,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/carrito/eliminar",
+					"raw": "{{host}}/api/carrito/eliminar",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"api",
 						"carrito",
 						"eliminar"
 					]
@@ -117,6 +205,16 @@
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJjdWJpbGxvczEyODdAZ21haWwuY29tIiwiaWF0IjoxNzY5Mzk2MDYzLCJleHAiOjE3NjkzOTk2NjN9.uO_vn7EEISe8XxVxBBfA9Qjvij2NtDpdc5vlFUAkBNU",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",

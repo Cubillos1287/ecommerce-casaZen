@@ -7,11 +7,12 @@ import { obtenerCarrito, obtenerItemsDelCarrito, crearCarrito, agregarAlCarrito,
 
 export const obtenerCarritoUsuario = async (req, res) => {
     try {
-        const carritoResult = await obtenerCarrito(req.params.userId);
+        const userId = req.user.id;
+        const carritoResult = await obtenerCarrito(userId);
         let carrito;
 
         if (carritoResult.length === 0) {
-            carrito = await crearCarrito(req.params.userId);
+            carrito = await crearCarrito(userId);
         } else {
             carrito = carritoResult[0];
         }
