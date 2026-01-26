@@ -1,5 +1,9 @@
-import { actualizarStock } from '../db/product.js';
-import { obtenerCarrito, obtenerItemsDelCarrito, crearCarrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito, editarCantidad } from '../db/cart.js';
+
+import { actualizarStock } from '../../database/product.js';
+
+import { obtenerCarrito, obtenerItemsDelCarrito, crearCarrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito, editarCantidad } from '../../database/cart.js';
+
+
 
 export const obtenerCarritoUsuario = async (req, res) => {
     try {

@@ -1,4 +1,4 @@
-import { obtenerProductos, obtenerProductoPorId, obtenerProductoPorCategoria } from '../db/product.js';
+import { obtenerProductos, obtenerProductoPorId, obtenerProductoPorCategoria } from '../../database/product.js';
 
 
 export const leerProductos = async (req, res) => {
