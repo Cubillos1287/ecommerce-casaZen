@@ -1,4 +1,4 @@
-import { actualizarStock } from '../db/product.js';
+import { actualizarStock } from '../../database/product.js';
 
 export const procesarCompra = async (req, res) => {
     const carrito = req.body;

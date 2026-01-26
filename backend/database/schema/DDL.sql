@@ -1,3 +1,6 @@
+CREATE DATABASE 
+\c ecommerce
+
 CREATE TABLE IF NOT EXISTS users
 (
     id SERIAL PRIMARY KEY,
@@ -5,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users
     email VARCHAR(100) NOT NULL,
     password_hash text NOT NULL,
     created_at timestamp NOT NULL DEFAULT now(),
-	UNIQUE (email)
+	  UNIQUE (email)
 );
 
 CREATE TABLE IF NOT EXISTS products (
