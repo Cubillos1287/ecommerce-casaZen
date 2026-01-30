@@ -112,7 +112,7 @@ ul {
   width: 100%;
   height: 100%;
   min-height: 600px;
-  background-image: url("./assets/imgs/inicio.jpg");
+  background-image: url("../src/assets/imgs/inicio.png");
   background-size: cover;
   background-position: center;
 }
