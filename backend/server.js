@@ -5,6 +5,7 @@ import { authMiddleware } from './middleware/authMiddleware.js';
 import authRoutes from "./routes/authRoutes.js"
 import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import favoritesRoutes from "./routes/favoritesRoutes.js"
 
 dotenv.config()
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use(productRoutes);
 app.use("/api/auth", authRoutes)
+app.use("/api/favoritos", favoritesRoutes)
 
 
 
