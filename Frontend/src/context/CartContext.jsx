@@ -1,9 +1,9 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import { UserContext } from "./UserContext";
+import Swal from "sweetalert2";
 
-// 1. Crear el Contexto
 export const CartContext = createContext();
 
-// Hook personalizado para usar el carrito fácilmente
 export const useCart = () => {
     const context = useContext(CartContext);
     if (!context) {
@@ -12,54 +12,202 @@ export const useCart = () => {
     return context;
 };
 
-// 2. Crear el Provider
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
+    const { token, user } = useContext(UserContext);
 
-    // Funciones del Carrito
-
-    // Agregar producto
-    const addToCart = (product) => {
-        // Verificar si ya existe en el carrito
-        const existingProduct = cart.find(item => item.id === product.id);
-
-        if (existingProduct) {
-            // Si existe, aumentamos la cantidad
-            setCart(cart.map(item =>
-                item.id === product.id
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            ));
+    // Cargar carrito desde Backend
+    useEffect(() => {
+        if (token) {
+            fetchCart();
         } else {
-            // Si no existe, lo agregamos con cantidad 1
-            setCart([...cart, { ...product, quantity: 1 }]);
+            setCart([]); // Limpiar si no hay token
+        }
+    }, [token]);
+
+    const fetchCart = async () => {
+        try {
+            const response = await fetch("http://localhost:3000/api/carrito", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (response.ok) {
+                const data = await response.json();
+                // El backend devuelve { id, user_id, cartItems: [...] }
+                // Mapeamos para que 'cart' sea el array de items
+                setCart(data.cartItems || []);
+            }
+        } catch (error) {
+            console.error("Error fetching cart:", error);
         }
     };
 
-    // Eliminar producto
-    const removeFromCart = (id) => {
-        setCart(cart.filter(item => item.id !== id));
-    };
+    // Agregar producto (Integration API)
+    const addToCart = async (product) => {
+        if (!token) {
+            Swal.fire({
+                title: "Inicia Sesión",
+                text: "Debes iniciar sesión para agregar al carrito",
+                icon: "info",
+                confirmButtonText: "Ir al Login"
+            });
+            return;
+        }
 
-    // Disminuir cantidad
-    const decreaseQuantity = (id) => {
-        const existingProduct = cart.find(item => item.id === id);
+        try {
+            // Necesitamos el cartId. Si no lo tenemos en el estado, lo obtenemos de fetchCart o asumimos
+            // Pero el endpoint 'agregar' pide 'cartId' según el controller.
+            // Espera, el controller 'agregarProductoAlCarrito' pide { cartId, productId }.
+            // Pero el cliente no siempre sabe su cartId si no lo guardamos.
+            // 'obtenerCarritoUsuario' nos da el ID del carrito.
 
-        if (existingProduct.quantity === 1) {
-            // Si es 1, lo eliminamos
-            removeFromCart(id);
-        } else {
-            // Si es mayor a 1, restamos
-            setCart(cart.map(item =>
-                item.id === id
-                    ? { ...item, quantity: item.quantity - 1 }
-                    : item
-            ));
+            // HACK: Primero obtenemos el carrito para asegurar que tenemos el ID
+            // Alternativa mejor: El backend debería inferir cartId del usuario, pero el controller actual lee req.body.cartId
+            // Vamos a obtener el cartId del estado si lo tuvieramos, o hacer fetch primero.
+            // Por simplicidad para este paso, haré que fetchCart guarde el cartId en un estado separado o lo buscamos.
+
+            // Vamos a hacer una llamada a obtenerCarrito primero si está vacío?
+            // No, mejor MODIFICAMOS fetch para guardar el cartId.
+            // Pero para hacerlo rápido sin cambiar todo el estado 'cart' (que es array), usaré una variable auxiliar o haré fetch dentro.
+
+            const cartRes = await fetch("http://localhost:3000/api/carrito", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const cartData = await cartRes.json();
+            const cartId = cartData.id;
+
+            const response = await fetch("http://localhost:3000/api/carrito/agregar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    cartId: cartId,
+                    productId: product.id
+                })
+            });
+
+            if (response.ok) {
+                fetchCart(); // Recargar carrito
+            } else {
+                const errorData = await response.json();
+                Swal.fire({
+                    title: "Error",
+                    text: errorData.message || "Error al agregar",
+                    icon: "error"
+                });
+            }
+
+        } catch (error) {
+            console.error("Error addToCart:", error);
         }
     };
 
-    // Calcular total
-    const total = cart.reduce((acc, item) => acc + (item.precio * item.quantity), 0);
+    // Eliminar producto (DELETE /:id)
+    const removeFromCart = async (productId) => {
+        if (!token) return;
+        try {
+            // Necesitamos cartId para algunos endpoints, pero el endpoint DELETE que creamos usa params productId y body cartId
+            // Mi endpoint nuevo: const { cartId } = req.body; const { productId } = req.params;
+            // Qué molestia pedir cartId en body para un delete param.
+            // Lo haré igual.
+
+            const cartRes = await fetch("http://localhost:3000/api/carrito", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const cartData = await cartRes.json();
+            const cartId = cartData.id;
+
+            const response = await fetch(`http://localhost:3000/api/carrito/${productId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ cartId })
+            });
+
+            if (response.ok) {
+                fetchCart();
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    // Disminuir cantidad (PUT /eliminar)
+    const decreaseQuantity = async (productId) => {
+        if (!token) return;
+        try {
+            const cartRes = await fetch("http://localhost:3000/api/carrito", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const cartData = await cartRes.json();
+            const cartId = cartData.id;
+
+            const response = await fetch("http://localhost:3000/api/carrito/eliminar", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    cartId: cartId,
+                    productId: productId
+                })
+            });
+
+            if (response.ok) {
+                fetchCart();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const checkout = async () => {
+        if (!token) return;
+        try {
+            const cartRes = await fetch("http://localhost:3000/api/carrito", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const cartData = await cartRes.json();
+            const cartId = cartData.id;
+
+            const response = await fetch("http://localhost:3000/api/carrito/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ cartId })
+            });
+
+            if (response.ok) {
+                setCart([]); // Vaciar localmente
+                Swal.fire({
+                    title: "¡Compra Exitosa!",
+                    text: "Tu pedido ha sido procesado correctamente.",
+                    icon: "success",
+                    confirmButtonText: "Genial"
+                });
+            } else {
+                const data = await response.json();
+                Swal.fire({
+                    title: "Error en la compra",
+                    text: data.message || "No se pudo procesar la compra",
+                    icon: "error"
+                });
+            }
+        } catch (error) {
+            console.error("Error checkout:", error);
+        }
+    };
+
+    const total = cart.reduce((acc, item) => acc + (item.product.precio * item.quantity), 0);
     const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
@@ -68,6 +216,7 @@ export const CartProvider = ({ children }) => {
             addToCart,
             removeFromCart,
             decreaseQuantity,
+            checkout,
             total,
             totalItems
         }}>

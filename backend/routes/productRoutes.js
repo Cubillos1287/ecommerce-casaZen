@@ -4,9 +4,9 @@ import { authMiddleware } from "../middleware/authMiddleware.js"
 
 const router = Router();
 
-router.get('/', authMiddleware, leerProductos);
-router.get('/categoria/:categoria', authMiddleware, leerProductoPorCategoria);
-router.get('/:id', authMiddleware, leerProductoPorId);
+router.get('/', leerProductos);
+router.get('/categoria/:categoria', leerProductoPorCategoria);
+router.get('/:id', leerProductoPorId);
 
 
 export default router;

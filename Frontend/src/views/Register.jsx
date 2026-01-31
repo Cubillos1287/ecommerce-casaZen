@@ -7,7 +7,7 @@ const Register = () => {
   const { register } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const [name, setName] = useState(""); 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,12 +15,23 @@ const Register = () => {
     e.preventDefault();
 
     // ✅ Validación: vacíos
-    if (!email.trim() || !password.trim()) {
+    if (!name.trim() || !email.trim() || !password.trim()) {
       return Swal.fire({
         title: "¡Campos vacíos!",
-        text: "Email y contraseña son obligatorios",
+        text: "Nombre, Email y Contraseña son obligatorios",
         icon: "error",
         confirmButtonText: "Entendido",
+      });
+    }
+
+    // ✅ Validación: formato email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return Swal.fire({
+        title: "¡Email inválido!",
+        text: "Por favor ingresa un correo electrónico válido.",
+        icon: "warning",
+        confirmButtonText: "Corregir",
       });
     }
 
@@ -34,7 +45,7 @@ const Register = () => {
       });
     }
 
-    const result = await register(email, password, name ); 
+    const result = await register(email, password, name);
 
     if (result) {
       Swal.fire({

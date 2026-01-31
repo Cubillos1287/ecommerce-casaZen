@@ -34,3 +34,28 @@ CREATE TABLE IF NOT EXISTS cart_items (
   FOREIGN KEY (cart_id) REFERENCES cart(id),
   FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+CREATE TABLE IF NOT EXISTS orders (
+  id SERIAL PRIMARY KEY,
+  user_id INT,
+  total INT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id SERIAL PRIMARY KEY,
+  order_id INT,
+  product_id INT,
+  quantity INT,
+  price INT,
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE IF NOT EXISTS favorites (
+  user_id INT,
+  product_id INT,
+  PRIMARY KEY (user_id, product_id),
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);

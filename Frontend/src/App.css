@@ -8,24 +8,26 @@ ul {
   padding: 0;
   margin: 0;
 }
-.app-container{
-    display: flex;
+
+.app-container {
+  display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
+
 /* .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 16px;
 } */
- 
+
 :root {
   --cz-card: #ffeded;
   --cz-input: #9e9e9e;
   --cz-input-text: #2b2b2b;
   --cz-primary: #a8dcab;
   --cz-primary-hover: #95c89a;
-} 
+}
 
 
 /*Paginas Autentificacion LOGIN y REGISTER*/
@@ -44,7 +46,8 @@ ul {
   width: min(1200px, 100%);
   background: var(--cz-card);
   border-radius: 8px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  ;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1.05fr 1fr;
@@ -89,7 +92,7 @@ ul {
 .auth-btn {
   width: 100%;
   background: #A8DCAB;
-  padding: 8px ;
+  padding: 8px;
   border-radius: 35px;
   font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
@@ -112,7 +115,7 @@ ul {
   width: 100%;
   height: 100%;
   min-height: 600px;
-  background-image: url("./assets/imgs/inicio.jpg");
+  background-image: url("/inicio.png");
   background-size: cover;
   background-position: center;
 }
@@ -131,13 +134,13 @@ ul {
   color: #000;
   font-family: "Archivo Black", sans-serif;
   width: 90%;
-  height: 80%;    
+  height: 80%;
   min-height: 80px;
   padding-left: 48px;
   border-radius: 8px;
 }
 
- 
+
 
 /* Pagina de PERFIL */
 .profile-page {
@@ -586,10 +589,10 @@ ul {
 
 .card-image {
   width: 100%;
-  height: 260px;       
-  object-fit: cover;  
+  height: 260px;
+  object-fit: cover;
   object-position: center;
-   background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 .card-nombre {
@@ -703,7 +706,7 @@ ul {
 
 @media (min-width: 900px) {
   .category-grid {
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -711,71 +714,89 @@ ul {
 .card.horizontal {
   flex-direction: row;
   width: 100%;
-  height: 250px;
+  height: 300px;
+  /* Altura FIJA para uniformidad */
   align-items: stretch;
 }
 
-.card.horizontal .card-image {
-  width: 40%;
-  height: auto;
-  min-height: 220px;
-  object-fit: cover;
+/* El contenedor es el hijo flexible directo ahora */
+.card.horizontal .card-image-container {
+  width: 50%;
+  min-height: 100%;
+  padding: 0;
+  /* Asegurar 0 padding */
+  display: flex;
 }
 
-.card-content {
+.card.horizontal .card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Llena todo el espacio sin bordes blancos */
+  object-position: center;
+}
+
+.card.horizontal .card-content {
   display: flex;
   flex-direction: column;
-  padding: 14px;
-  height: 100%;
-  width: 60%;
+  padding: 20px;
+  /* Un poco más de aire */
+  width: 50%;
+  justify-content: space-between;
 }
 
 .card.horizontal .card-nombre {
-  margin: 14px 0 14px 14px;
-  height: 25px;
-
+  margin: 0 0 8px 0;
+  min-height: auto;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card.horizontal .card-descripcion {
-  margin: 0 0 14px 14px;
+  margin: 0 0 16px 0;
   font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card.horizontal .card-precio {
-  margin: 14px 0 14px 14px;
+  margin: 0 0 16px 0;
   font-size: 18px;
-  height: 20px;
-
+  font-weight: 700;
 }
+
 
 
 .card.vertical .card-content {
   display: flex;
   flex-direction: column;
-  padding: 14px;
+  padding: 16px;
   width: 100%;
-  height: 100%; 
-
+  height: 100%;
+  justify-content: space-between;
 }
 
-
-
 .card.vertical .card-nombre {
-  height: 25px;
-  margin: 20px 0 20px 0;
-
+  margin: 0 0 8px 0;
+  min-height: auto;
+  /* Allow growth */
 }
 
 .card.vertical .card-descripcion {
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
   font-size: 14px;
+  line-height: 1.4;
 }
 
 .card.vertical .card-precio {
-  margin: 15px 0 15px 0;
+  margin: 0 0 16px 0;
   font-size: 18px;
-  height: 20px;
-
+  font-weight: 700;
 }
 
 
@@ -833,7 +854,7 @@ ul {
 .incio-btn:hover {
   background-color: #7CC47C;
   transform: scale(1.05);
-  opacity: 0.9; 
+  opacity: 0.9;
 }
 
 .auth-links {

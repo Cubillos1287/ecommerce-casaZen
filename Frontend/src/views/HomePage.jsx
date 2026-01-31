@@ -7,8 +7,9 @@ function HomePage() {
   const [destacados, setDestacados] = useState([]);
 
   useEffect(() => {
-    if (products.length > 0) {
-      setDestacados([...products].sort(() => Math.random() - 0.5));
+    if (products && products.length > 0) {
+      const shuffled = [...products].sort(() => Math.random() - 0.5);
+      setDestacados(shuffled);
     }
   }, [products]);
   console.log("products:", products);

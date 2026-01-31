@@ -22,6 +22,17 @@ const Login = () => {
       });
     }
 
+    // 2️⃣ Validar formato de Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return Swal.fire({
+        title: "¡Email inválido!",
+        text: "Por favor ingresa un correo electrónico válido.",
+        icon: "warning",
+        confirmButtonText: "Corregir",
+      });
+    }
+
     // 2️⃣ Password corto
     if (password.length < 6) {
       return Swal.fire({

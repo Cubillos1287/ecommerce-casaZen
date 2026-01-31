@@ -16,19 +16,16 @@ export const ProductProvider = ({ children }) => {
   // Función que pide los productos al backend
   const getProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/productos");
+      // OJO: La ruta en backend es /api/productos, no /productos
+      const response = await fetch("http://localhost:3000/api/productos");
       const data = await response.json();
 
-      //  Como el endpoint es público, data DEBE ser un array
-      setProducts(data);
+      console.log("DATA /api/productos:", data);
+      setProducts(Array.isArray(data) ? data : []);
+
     } catch (error) {
       console.error("Error al obtener productos:", error);
     }
-    const response = await fetch("http://localhost:3000/productos");
-const data = await response.json();
-console.log("DATA /productos:", data);
-setProducts(Array.isArray(data) ? data : (data.productos || data.products || []));
-
   };
 
   //  Compartimos los productos con toda la app

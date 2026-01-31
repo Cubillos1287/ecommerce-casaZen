@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export const UserContext = createContext();
 
@@ -36,7 +37,7 @@ export const UserProvider = ({ children }) => {
         }
 
         const data = await res.json();
-        setUser(data.user); 
+        setUser(data.user);
       } catch (error) {
         console.log("Error /me:", error);
       }
@@ -46,15 +47,15 @@ export const UserProvider = ({ children }) => {
   }, [token]);
 
   //  LOGIN
-  const login = async ( email, password) => {
+  const login = async (email, password) => {
     try {
       const res = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-           email: email.trim(), 
-           password: password.trim() ,
-          }),
+        body: JSON.stringify({
+          email: email.trim(),
+          password: password.trim(),
+        }),
       });
 
       const data = await res.json();
@@ -63,18 +64,27 @@ export const UserProvider = ({ children }) => {
       console.log("LOGIN response:", data);
 
       if (!res.ok) {
-        alert(data.message || data.error || "Error al iniciar sesión");
+        Swal.fire({
+          icon: "error",
+          title: "Error de Login",
+          text: data.message || data.error || "Error al iniciar sesión"
+        });
         return null;
       }
 
       //  Ajusta según lo que nuestro backend devuelva
-      setToken(data.token );
-      setUser(data.user );
+      setToken(data.token);
+      setUser(data.user);
 
       return data;
 
     } catch (error) {
       console.log("Error login:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de Conexión",
+        text: "No se pudo conectar con el servidor. Intenta nuevamente."
+      });
       return null;
     }
   };
@@ -91,7 +101,11 @@ export const UserProvider = ({ children }) => {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || data.error || "Error al registrarse");
+        Swal.fire({
+          icon: "error",
+          title: "Error de Registro",
+          text: data.message || data.error || "Error al registrarse"
+        });
         return null;
       }
 
@@ -101,7 +115,49 @@ export const UserProvider = ({ children }) => {
       return data;
     } catch (error) {
       console.log("Error register:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de Conexión",
+        text: "No se pudo conectar con el servidor. Intenta nuevamente."
+      });
       return null;
+    }
+  };
+
+  // UPDATE USER
+  const updateUser = async (updatedData) => {
+    if (!token) return null;
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/me", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(updatedData)
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // Actualizamos el usuario localmente con los datos nuevos
+        setUser(data.user);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: data.message || "Error al actualizar perfil"
+        });
+      }
+      return res.ok;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de Conexión",
+        text: "No se pudo conectar con el servidor. Intenta nuevamente."
+      });
+      return false;
     }
   };
 
@@ -123,7 +179,9 @@ export const UserProvider = ({ children }) => {
         login,
         register,
         logout,
-        setUser, 
+        logout,
+        setUser,
+        updateUser,
       }}
     >
       {children}

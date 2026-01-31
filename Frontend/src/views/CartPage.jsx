@@ -17,19 +17,19 @@ const CartPage = () => {
                     ) : (
                         cart.map((item) => (
                             <div key={item.id} className="cart-item">
-                                <img src={item.img} alt={item.nombre} className="cart-item-img" />
+                                <img src={item.product.img} alt={item.product.nombre} className="cart-item-img" />
 
                                 <div className="cart-item-info">
-                                    <h3>{item.nombre}</h3>
-                                    <p className="cart-item-price">${item.precio}</p>
+                                    <h3>{item.product.nombre}</h3>
+                                    <p className="cart-item-price">${item.product.precio}</p>
 
                                     <div className="cart-controls">
                                         {/* addToCart suma 1 si ya existe */}
-                                        <button className="cart-control-btn" onClick={() => addToCart(item)}>+</button>
+                                        <button className="cart-control-btn" onClick={() => addToCart(item.product)}>+</button>
                                         <span style={{ fontSize: '18px', fontWeight: 'bold' }}>{item.quantity}</span>
-                                        <button className="cart-control-btn" onClick={() => decreaseQuantity(item.id)}>-</button>
+                                        <button className="cart-control-btn" onClick={() => decreaseQuantity(item.product_id)}>-</button>
                                     </div>
-                                    <button className="btn-remove" onClick={() => removeFromCart(item.id)} style={{ marginTop: '10px', color: 'red', border: 'none', background: 'transparent', cursor: 'pointer' }}>Eliminar</button>
+                                    <button className="btn-remove" onClick={() => removeFromCart(item.product_id)} style={{ marginTop: '10px', color: 'red', border: 'none', background: 'transparent', cursor: 'pointer' }}>Eliminar</button>
                                 </div>
                             </div>
                         ))

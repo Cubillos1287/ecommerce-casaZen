@@ -2,6 +2,7 @@ import AppRouter from "./router/AppRouter";
 import { UserProvider } from "./context/UserContext";
 import { ProductProvider } from "./context/ProductContext";
 import { CartProvider } from "./context/CartContext";
+import { FavoritesProvider } from "./context/FavoritesContext";
 import "./App.css";
 
 const App = () => {
@@ -9,7 +10,9 @@ const App = () => {
     <UserProvider>
       <ProductProvider>
         <CartProvider>
-          <AppRouter />
+          <FavoritesProvider>
+            <AppRouter />
+          </FavoritesProvider>
         </CartProvider>
       </ProductProvider>
     </UserProvider>
