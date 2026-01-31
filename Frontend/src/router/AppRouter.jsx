@@ -13,6 +13,8 @@ import DecoracionPage from "../views/DecoracionPage";
 import PagoPage from "../views/PagoPage";
 import ConfirmacionPage from "../views/ConfirmacionPage";
 import FavoritosPage from "../views/FavoritosPage";
+import NotFoundPage from "../views/NotFoundPage";
+
 import Layout from "../Layout";
 
 export default function AppRouter() {
@@ -28,7 +30,7 @@ export default function AppRouter() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<CartPage />} />
 
-          
+
           <Route path="/cocina" element={<CocinaPage />} />
           <Route path="/cuarto" element={<CuartoPage />} />
           <Route path="/baño" element={<BanioPage />} />
@@ -38,7 +40,8 @@ export default function AppRouter() {
           <Route path="/favorites" element={<FavoritosPage />} />
           <Route path="/confirmacion" element={<ConfirmacionPage />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -18,14 +18,6 @@ const ProductCard = ({
 
   const handleAddToCart = () => {
     addToCart({ id, nombre, precio, img });
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Producto añadido al carrito",
-      showConfirmButton: false,
-      timer: 1500,
-      toast: true
-    });
   };
 
   const toggleFavorite = () => {

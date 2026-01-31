@@ -179,7 +179,6 @@ export const UserProvider = ({ children }) => {
         login,
         register,
         logout,
-        logout,
         setUser,
         updateUser,
       }}

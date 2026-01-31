@@ -91,6 +91,14 @@ export const CartProvider = ({ children }) => {
 
             if (response.ok) {
                 fetchCart(); // Recargar carrito
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Producto añadido al carrito",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    toast: true
+                });
             } else {
                 const errorData = await response.json();
                 Swal.fire({
