@@ -1,6 +1,3 @@
-CREATE DATABASE 
-\c ecommerce
-
 CREATE TABLE IF NOT EXISTS users
 (
     id SERIAL PRIMARY KEY,
@@ -8,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users
     email VARCHAR(100) NOT NULL,
     password_hash text NOT NULL,
     created_at timestamp NOT NULL DEFAULT now(),
-	  UNIQUE (email)
+	UNIQUE (email)
 );
 
 CREATE TABLE IF NOT EXISTS products (
@@ -34,11 +31,3 @@ CREATE TABLE IF NOT EXISTS cart_items (
   FOREIGN KEY (cart_id) REFERENCES cart(id),
   FOREIGN KEY (product_id) REFERENCES products(id)
 );
-
-CREATE TABLE IF NOT EXISTS favorites (
-  user_id   INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  product_id INT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
-  created_at TIMESTAMP DEFAULT NOW(),
-  PRIMARY KEY (user_id, product_id)
-);
-

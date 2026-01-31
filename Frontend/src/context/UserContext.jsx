@@ -3,14 +3,20 @@ import { createContext, useEffect, useState } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [user, setUser] = useState(() => {
+
     const saved = localStorage.getItem("user");
     return saved ? JSON.parse(saved) : null;
+
   });
+
+  const isLogged = !!token;
 
   // Mantener token/user sincronizados con localStorage
   useEffect(() => {
+
     if (token) localStorage.setItem("token", token);
     else localStorage.removeItem("token");
 
@@ -18,7 +24,8 @@ export const UserProvider = ({ children }) => {
     else localStorage.removeItem("user");
   }, [token, user]);
 
-  // Si hay token, traer el usuario real desde /me
+// GET /me (validate token)
+
   useEffect(() => {
     const getMe = async () => {
       if (!token) return;
@@ -105,14 +112,109 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+
+  // LOGOUT
+ 
   const logout = () => {
     setToken("");
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    setFavoriteIds(new Set());
   };
 
-  const isLogged = !!token;
+  
+  // FAVORITOS
+ 
+  const [favoriteIds, setFavoriteIds] = useState(() => new Set());
+
+  // Traer favoritos del usuario
+  const fetchFavorites = async () => {
+    if (!token) {
+      setFavoriteIds(new Set());
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:3000/api/favoritos", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) return;
+
+      const data = await res.json(); // { productIds: [] }
+      setFavoriteIds(new Set((data.productIds || []).map(String)));
+    } catch (error) {
+      console.log("Error fetchFavorites:", error);
+    }
+  };
+
+  // Agregar favorito
+  const addFavorite = async (productId) => {
+    if (!token) return false;
+
+    try {
+      const res = await fetch("http://localhost:3000/api/favoritos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productId }),
+      });
+
+       const text = await res.text();
+  
+
+      if (!res.ok) return false;
+
+      setFavoriteIds((prev) => {
+        const next = new Set(prev);
+        next.add(String(productId));
+        return next;
+      });
+
+      return true;
+    } catch (error) {
+      console.log("Error addFavorite:", error);
+      return false;
+    }
+  };
+
+  // Eliminar favorito
+  const removeFavorite = async (productId) => {
+    if (!token) return false;
+
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/favoritos/${productId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) return false;
+
+      setFavoriteIds((prev) => {
+        const next = new Set(prev);
+        next.delete(String(productId));
+        return next;
+      });
+
+      return true;
+    } catch (error) {
+      console.log("Error removeFavorite:", error);
+      return false;
+    }
+  };
+
+  // Cuando cambia el token, refrescar favoritos
+  useEffect(() => {
+    fetchFavorites();
+  }, [token]);
+
+
 
   return (
     <UserContext.Provider
@@ -123,7 +225,16 @@ export const UserProvider = ({ children }) => {
         login,
         register,
         logout,
-        setUser, 
+        setUser,  
+
+
+        //Favoritos
+        favoriteIds,
+        fetchFavorites,
+        addFavorite,
+        removeFavorite,
+        
+
       }}
     >
       {children}
