@@ -62,6 +62,7 @@ export const actualizarProducto = async (req, res) => {
         const { nombre, precio, stock, categoria, img, descripcion } = req.body;
 
         const producto = await actualizarProductoModel(id, nombre, precio, stock, categoria, img, descripcion);
+        console.log("Actualizando producto:", { id, nombre, precio, stock, categoria, img, descripcion });
 
         if (!producto) {
             return res.status(404).json({ message: "Producto no encontrado" });

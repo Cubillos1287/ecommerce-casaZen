@@ -35,7 +35,11 @@ const ProductCard = ({
       <div className="img-wrapper">
         <img
           className="card-image"
-          src={img ? img.replace(/^.*\/imgs\//, '/imgs/').replace(/^\/?src\/assets\/imgs\//, '/imgs/') : ''}
+          src={
+            img?.startsWith("http") || img?.startsWith("data:")
+              ? img
+              : `/imgs/${img?.split('/').pop()}`
+          }
           alt={nombre}
         />
         <button

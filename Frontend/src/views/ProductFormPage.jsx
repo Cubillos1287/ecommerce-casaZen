@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { ProductContext } from "../context/ProductContext"; // Importar contexto de productos
 import Swal from "sweetalert2";
 
 const ProductFormPage = () => {
     const { id } = useParams(); // Si existe id, es edición
     const navigate = useNavigate();
     const { token, user } = useContext(UserContext);
+    const { getProducts } = useContext(ProductContext); // Obtener función para refrescar
 
     const isEditing = !!id;
 
@@ -95,6 +97,7 @@ const ProductFormPage = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                await getProducts(); // Refrescar lista de productos
                 navigate("/"); // O a la vista del producto
             } else {
                 const errorData = await res.json();
@@ -117,7 +120,11 @@ const ProductFormPage = () => {
                     {formData.img && (
                         <div className="img-wrapper" style={{ height: "200px", marginBottom: "20px" }}>
                             <img
-                                src={formData.img ? formData.img.replace(/^.*\/imgs\//, '/imgs/').replace(/^\/?src\/assets\/imgs\//, '/imgs/') : ''}
+                                src={
+                                    formData.img?.startsWith("http") || formData.img?.startsWith("data:")
+                                        ? formData.img
+                                        : `/imgs/${formData.img?.split('/').pop()}`
+                                }
                                 alt="Vista previa"
                                 className="card-image"
                                 style={{ objectFit: "contain" }}

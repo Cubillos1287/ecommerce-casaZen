@@ -30,7 +30,7 @@ export const ProductProvider = ({ children }) => {
 
   //  Compartimos los productos con toda la app
   return (
-    <ProductContext.Provider value={{ products }}>
+    <ProductContext.Provider value={{ products, getProducts }}>
       {children}
     </ProductContext.Provider>
   );
