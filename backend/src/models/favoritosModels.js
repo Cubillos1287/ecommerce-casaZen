@@ -1,4 +1,4 @@
-import pool from "../../database/config.js";
+import pool from "../config/db.js";
 
 export const getFavoriteProductIdsModel = async (userId) => {
   const { rows } = await pool.query(
