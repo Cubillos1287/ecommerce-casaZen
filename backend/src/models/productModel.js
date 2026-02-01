@@ -1,4 +1,4 @@
-import pool from './config.js';
+import pool from '../config/db.js';
 
 export const obtenerProductos = async () => {
     const { rows } = await pool.query('SELECT * FROM products');
@@ -30,4 +30,3 @@ export const agregarProducto = async (nombre, precio, stock, categoria) => {
     const { rows } = await pool.query('INSERT INTO products (nombre, precio, stock, categoria) VALUES ($1, $2, $3, $4) RETURNING *', [nombre, precio, stock, categoria]);
     return rows[0];
 }
-

@@ -1,6 +1,6 @@
 
 import { Router } from "express";
-import { agregarFavorito, eliminarFavorito, obtenerFavoritos } from "../src/controllers/favoritesController.js";
+import { agregarFavorito, eliminarFavorito, obtenerFavoritos } from "../controllers/favoritesController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = Router();

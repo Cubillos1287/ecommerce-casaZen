@@ -1,11 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { authMiddleware } from './middleware/authMiddleware.js';
-import authRoutes from "./routes/authRoutes.js"
-import productRoutes from './routes/productRoutes.js';
-import cartRoutes from './routes/cartRoutes.js';
-import favoritesRoutes from './routes/favoritesRoutes.js';
+import { authMiddleware } from './src/middleware/authMiddleware.js';
+import authRoutes from "./src/routes/authRoutes.js"
+import productRoutes from './src/routes/productRoutes.js';
+import cartRoutes from './src/routes/cartRoutes.js';
+import favoritesRoutes from './src/routes/favoritesRoutes.js';
 
 dotenv.config()
 

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { leerProductos, leerProductoPorCategoria, leerProductoPorId } from '../src/controllers/productControllers.js';
+import { leerProductos, leerProductoPorCategoria, leerProductoPorId } from '../controllers/productControllers.js';
 import { authMiddleware } from "../middleware/authMiddleware.js"
 
 const router = Router();

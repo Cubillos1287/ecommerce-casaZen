@@ -1,5 +1,5 @@
 
-import pool from '../../database/config.js';
+import pool from '../config/db.js';
 
 export const agregarFavorito = async (req, res) => {
     // El usuario viene del middleware authMiddleware (req.user)

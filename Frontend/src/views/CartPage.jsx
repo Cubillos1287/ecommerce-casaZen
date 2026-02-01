@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 const CartPage = () => {
-    const { cart, increaseQuantity, decreaseQuantity, removeFromCart, total, addToCart } = useCart();
+    const { cart, increaseQuantity, decreaseQuantity, removeFromCart, total, addToCart, checkout } = useCart();
 
 
     return (
@@ -43,7 +43,7 @@ const CartPage = () => {
                             <span className="cart-total-amount">${total.toFixed(3)}</span>
                         </div>
                         <Link to="/confirmacion">
-                            <button className="cart-pay-btn">Pagar</button>
+                            <button className="cart-pay-btn" onClick={() => checkout()}>Pagar</button>
                         </Link>
                     </div>
                 )}

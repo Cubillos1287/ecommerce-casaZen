@@ -12,7 +12,6 @@ import OficinaPage from "../views/OficinaPage";
 import DecoracionPage from "../views/DecoracionPage";
 import PagoPage from "../views/PagoPage";
 import ConfirmacionPage from "../views/ConfirmacionPage";
-import FavoritosPage from "../views/FavoritosPage";
 import NotFoundPage from "../views/NotFoundPage";
 
 import Layout from "../Layout";
@@ -37,7 +36,7 @@ export default function AppRouter() {
           <Route path="/oficina" element={<OficinaPage />} />
           <Route path="/decoracion" element={<DecoracionPage />} />
           <Route path="/pago" element={<PagoPage />} />
-          <Route path="/favorites" element={<FavoritosPage />} />
+
           <Route path="/confirmacion" element={<ConfirmacionPage />} />
 
 

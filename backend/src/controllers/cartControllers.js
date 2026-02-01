@@ -1,7 +1,7 @@
 
-import { actualizarStock, obtenerProductoPorId } from '../../database/product.js';
+import { actualizarStock, obtenerProductoPorId } from '../models/productModel.js';
 
-import { obtenerCarrito, obtenerItemsDelCarrito, crearCarrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito, editarCantidad } from '../../database/cart.js';
+import { obtenerCarrito, obtenerItemsDelCarrito, crearCarrito, agregarAlCarrito, eliminarDelCarrito, vaciarCarrito, editarCantidad } from '../models/cartModel.js';
 
 
 

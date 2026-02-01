@@ -1,4 +1,4 @@
-import pool from './config.js';
+import pool from '../config/db.js';
 
 export const obtenerCarrito = async (userId) => {
     const { rows } = await pool.query('SELECT * FROM cart WHERE user_id = $1', [userId]);
@@ -52,4 +52,3 @@ export const editarCantidad = async (cartId, productId, quantity) => {
     const { rows } = await pool.query('UPDATE cart_items SET quantity = $3 WHERE cart_id = $1 AND product_id = $2 RETURNING *', [cartId, productId, quantity]);
     return rows[0];
 }
-

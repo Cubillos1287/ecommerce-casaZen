@@ -1,4 +1,4 @@
-import { obtenerProductos, obtenerProductoPorId, obtenerProductoPorCategoria } from '../../database/product.js';
+import { obtenerProductos, obtenerProductoPorId, obtenerProductoPorCategoria } from '../models/productModel.js';
 
 
 export const leerProductos = async (req, res) => {
@@ -29,4 +29,3 @@ export const leerProductoPorId = async (req, res) => {
         res.status(500).json({ message: "Error al obtener el producto" });
     }
 }
-
