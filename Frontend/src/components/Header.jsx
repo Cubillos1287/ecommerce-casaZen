@@ -24,26 +24,11 @@ const Header = () => {
               <>
                 <Link to="/profile" className="auth-link">Perfil</Link>
                 <Link to="/favoritos" className="auth-link">Favoritos</Link>
+                <Link to="/" className="auth-link" onClick={logout}> Cerrar Sesion</Link>
 
 
-                <button
-                  type="button"
-                  className="auth-link logout-btn-text"
-                  onClick={logout}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: 0,
-                    font: "inherit",
-                  }}
-                >
-                  Cerrar Sesión
-                </button>
-
-                {/* opcional: mostrar email */}
-                <span className="auth-link" style={{ cursor: "default" }}>
-                  {user?.email}
+                <span className="auth-link" style={{ textDecoration : "none" , fontWeight : "normal"}}>
+                  Bienvenid@, {user?.name}
                 </span>
               </>
             )}
