@@ -939,7 +939,6 @@ ul {
 
 .favoritos-page p {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   margin: 20px 0 20px 0;
 
@@ -949,11 +948,32 @@ ul {
 .products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  ;
   gap: 24px;
   max-width: 1200px;
   justify-items: center;
   margin: 40px auto;
+  padding: 0 16px;
+}
+
+/* Laptop / tablets grandes */
+@media (max-width: 992px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 

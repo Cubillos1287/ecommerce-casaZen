@@ -34,10 +34,7 @@ export const registerController = async (req, res) => {
 
     });
 
-    console.log("JWT_SECRET ", process.env.JWT_SECRET);
-    console.log("BODY REGISTER:", req.body);
-
-
+    
 
 
     const token = jwt.sign(

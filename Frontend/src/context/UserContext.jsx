@@ -67,9 +67,6 @@ export const UserProvider = ({ children }) => {
 
       const data = await res.json();
 
-      console.log("LOGIN status:", res.status);
-      console.log("LOGIN response:", data);
-
       if (!res.ok) {
         Swal.fire({
           icon: "error",
@@ -205,37 +202,34 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  // Agregar favorito
   const addFavorite = async (productId) => {
-    if (!token) return false;
+    const res = await fetch("http://localhost:3000/api/favoritos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ productId }),
+    });
 
-    try {
-      const res = await fetch("http://localhost:3000/api/favoritos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ productId }),
-      });
+    const data = await res.json().catch(() => ({}));
 
-      const text = await res.text();
-
-
-      if (!res.ok) return false;
-
-      setFavoriteIds((prev) => {
-        const next = new Set(prev);
-        next.add(String(productId));
-        return next;
-      });
-
-      return true;
-    } catch (error) {
-      console.log("Error addFavorite:", error);
+    if (!res.ok) {
+      console.log("STATUS:", res.status, "BODY:", data);
       return false;
     }
+
+    // ✅ Actualiza el estado para que la UI cambie
+    setFavoriteIds((prev) => {
+      const next = new Set(prev);
+      next.add(String(productId));
+      return next;
+    });
+
+    return true;
   };
+
+
 
   // Eliminar favorito
   const removeFavorite = async (productId) => {

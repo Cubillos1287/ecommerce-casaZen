@@ -1,19 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { ProductContext } from "../context/ProductContext";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-
 function HomePage() {
-
   const navigate = useNavigate();
-  const {
-    token, // Token para verificar auth
-    favoriteIds = new Set(), // Set con IDs de favoritos
-    addFavorite,
-    removeFavorite,
-  } = useContext(UserContext);
+  const { products } = useContext(ProductContext);
+
+
+  const { token, favoriteIds, addFavorite, removeFavorite } = useContext(UserContext);
+
+  const [destacados, setDestacados] = useState([]);
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      const shuffled = [...products].sort(() => Math.random() - 0.5);
+      setDestacados(shuffled);
+    }
+  }, [products]);
+
+  const isFav = (id) => {
+    if (!favoriteIds) return false;
+    if (favoriteIds instanceof Set) return favoriteIds.has(String(id)) || favoriteIds.has(Number(id));
+    return favoriteIds.includes(String(id)) || favoriteIds.includes(Number(id));
+  };
 
   const handleFavoriteClick = async (productId, isFavorite) => {
     if (!token) {
@@ -27,28 +38,16 @@ function HomePage() {
       await addFavorite(productId);
     }
   };
-  const { products } = useContext(ProductContext);
-  const [destacados, setDestacados] = useState([]);
-
-  useEffect(() => {
-    if (products && products.length > 0) {
-      const shuffled = [...products].sort(() => Math.random() - 0.5);
-      setDestacados(shuffled);
-    }
-  }, [products]);
-  console.log("products:", products);
-
 
   return (
     <div className="home-page">
-
       <div className="hero-section">
         <div className="hero-content">
           <h2>Espacios simples, vida simple.</h2>
         </div>
       </div>
 
-      <div className="products-container">
+      <div className="products-container products-grid">
         {destacados.slice(0, 20).map((producto) => (
           <ProductCard
             key={producto.id}
@@ -57,14 +56,13 @@ function HomePage() {
             nombre={producto.nombre}
             descripcion={producto.descripcion}
             precio={producto.precio}
-            isFavorite={favoriteIds.has(String(producto.id))}
+            isFavorite={isFav(producto.id)}
             onFavoriteClick={handleFavoriteClick}
           />
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default HomePage;
-

@@ -16,7 +16,6 @@ export const ProductProvider = ({ children }) => {
   // Función que pide los productos al backend
   const getProducts = async () => {
     try {
-      // OJO: La ruta en backend es /api/productos, no /productos
       const response = await fetch("http://localhost:3000/api/productos");
       const data = await response.json();
 
