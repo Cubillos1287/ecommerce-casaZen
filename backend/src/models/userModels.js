@@ -28,7 +28,7 @@ export const getUserByEmailModel = async (email) => {
 
 export const getUserByIdModel = async (id) => {
   const query = {
-    text: `SELECT id, name , email, password_hash FROM users WHERE id = $1`,
+    text: `SELECT id, name , email, password_hash, rol FROM users WHERE id = $1`,
     values: [id]
   };
 

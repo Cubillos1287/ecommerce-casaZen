@@ -78,7 +78,8 @@ export const loginController = async (req, res) => {
     const safeUser = {
       id: user.id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      rol: user.rol
     };
 
     const token = jwt.sign(

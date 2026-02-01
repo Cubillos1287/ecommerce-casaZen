@@ -12,7 +12,9 @@ import OficinaPage from "../views/OficinaPage";
 import DecoracionPage from "../views/DecoracionPage";
 import AutencicacioPage from "../views/AutenticacionPage";
 import ConfirmacionPage from "../views/ConfirmacionPage";
+import FavoritosPage from "../views/FavoritosPage";
 import NotFoundPage from "../views/NotFoundPage";
+import ProductFormPage from "../views/ProductFormPage";
 
 import Layout from "../Layout";
 
@@ -35,11 +37,15 @@ export default function AppRouter() {
           <Route path="/baño" element={<BanioPage />} />
           <Route path="/oficina" element={<OficinaPage />} />
           <Route path="/decoracion" element={<DecoracionPage />} />
-          <Route path="/pago" element={<PagoPage />} />
+          <Route path="/decoracion" element={<DecoracionPage />} />
 
           <Route path="/acceso" element={<AutencicacioPage />} />
           <Route path="/favoritos" element={<FavoritosPage />} />
           <Route path="/confirmacion" element={<ConfirmacionPage />} />
+
+          {/* Rutas de admin y gestión de productos */}
+          <Route path="/productos/crear" element={<ProductFormPage />} />
+          <Route path="/productos/editar/:id" element={<ProductFormPage />} />
 
 
           <Route path="*" element={<NotFoundPage />} />

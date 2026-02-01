@@ -65,6 +65,17 @@ const Profile = () => {
                         />
                     </div>
 
+                    {/* Botón para crear producto (Solo Admin) */}
+                    {user && (user.rol === 'admin' || user.email === 'admin@casazen.com') && (
+                        <button
+                            onClick={() => navigate("/productos/crear")}
+                            className="profile-edit-btn"
+                            style={{ marginBottom: "20px", width: "100%", background: "#ffeded", border: "2px solid #a8dcab" }}
+                        >
+                            ➕ Publicar Nuevo Producto
+                        </button>
+                    )}
+
                     {isEditing ? (
                         <>
                             <div className="profile-field" style={{ flexDirection: "column", alignItems: "start", gap: "5px" }}>

@@ -8,16 +8,25 @@ import { useNavigate } from "react-router-dom";
 function HomePage() {
 
   const navigate = useNavigate();
-  const {token} = useContext(UserContext);
+  const {
+    token, // Token para verificar auth
+    favoriteIds = new Set(), // Set con IDs de favoritos
+    addFavorite,
+    removeFavorite,
+  } = useContext(UserContext);
 
-  const handleFavoriteClick = (productId, isFavorite) => {
+  const handleFavoriteClick = async (productId, isFavorite) => {
     if (!token) {
       navigate("/acceso");
       return;
     }
 
-    console.log("Favorito click:", productId, "isFavorite:", isFavorite)
-  }
+    if (isFavorite) {
+      await removeFavorite(productId);
+    } else {
+      await addFavorite(productId);
+    }
+  };
   const { products } = useContext(ProductContext);
   const [destacados, setDestacados] = useState([]);
 
@@ -48,7 +57,7 @@ function HomePage() {
             nombre={producto.nombre}
             descripcion={producto.descripcion}
             precio={producto.precio}
-            isFavorite={false}
+            isFavorite={favoriteIds.has(String(producto.id))}
             onFavoriteClick={handleFavoriteClick}
           />
         ))}

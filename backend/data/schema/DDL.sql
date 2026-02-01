@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users
     email VARCHAR(100) NOT NULL,
     password_hash text NOT NULL,
     created_at timestamp NOT NULL DEFAULT now(),
+    rol VARCHAR(20) DEFAULT 'user',
 	  UNIQUE (email)
 );
 

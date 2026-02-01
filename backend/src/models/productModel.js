@@ -18,15 +18,23 @@ export const actualizarStock = async (id, stock) => {
     return rows;
 }
 
-export const actualizaProducto = async (id, nombre, precio, stock, categoria) => {
-    const { rows } = await pool.query('UPDATE products SET nombre = $2, precio = $3, stock = $4, categoria = $5 WHERE id = $1 RETURNING *', [id, nombre, precio, stock, categoria]);
+export const actualizaProducto = async (id, nombre, precio, stock, categoria, img, descripcion) => {
+    const { rows } = await pool.query(
+        'UPDATE products SET nombre = $2, precio = $3, stock = $4, categoria = $5, img = $6, descripcion = $7 WHERE id = $1 RETURNING *',
+        [id, nombre, precio, stock, categoria, img, descripcion]
+    );
     return rows[0];
 }
+
 export const eliminarProducto = async (id) => {
     const { rows } = await pool.query('DELETE FROM products WHERE id = $1 RETURNING *', [id]);
     return rows[0];
 }
-export const agregarProducto = async (nombre, precio, stock, categoria) => {
-    const { rows } = await pool.query('INSERT INTO products (nombre, precio, stock, categoria) VALUES ($1, $2, $3, $4) RETURNING *', [nombre, precio, stock, categoria]);
+
+export const agregarProducto = async (nombre, precio, stock, categoria, img, descripcion) => {
+    const { rows } = await pool.query(
+        'INSERT INTO products (nombre, precio, stock, categoria, img, descripcion) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+        [nombre, precio, stock, categoria, img, descripcion]
+    );
     return rows[0];
 }
