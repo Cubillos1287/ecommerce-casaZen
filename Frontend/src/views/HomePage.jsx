@@ -1,8 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { ProductContext } from "../context/ProductContext";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
+
 
 function HomePage() {
+
+  const navigate = useNavigate();
+  const {token} = useContext(UserContext);
+
+  const handleFavoriteClick = (productId, isFavorite) => {
+    if (!token) {
+      navigate("/acceso");
+      return;
+    }
+
+    console.log("Favorito click:", productId, "isFavorite:", isFavorite)
+  }
   const { products } = useContext(ProductContext);
   const [destacados, setDestacados] = useState([]);
 
@@ -33,6 +48,8 @@ function HomePage() {
             nombre={producto.nombre}
             descripcion={producto.descripcion}
             precio={producto.precio}
+            isFavorite={false}
+            onFavoriteClick={handleFavoriteClick}
           />
         ))}
       </div>

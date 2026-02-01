@@ -1,10 +1,36 @@
 import React, { useContext } from "react";
 import ProductCard from "../components/ProductCard";
 import { ProductContext } from "../context/ProductContext";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+
 
 const CuartoPage = () => {
+
+    const navigate = useNavigate();
+
     const { products } = useContext(ProductContext);
+    const { token,
+        favoriteIds = new Set(),
+        addFavorite,
+        removeFavorite
+    } = useContext(UserContext);
+
     const cuartoProductos = products.filter((producto) => producto.categoria === "cuarto");
+
+    const handleFavoriteClick = async (productId, isFavorite) => {
+        if (!token) {
+            navigate("/acceso");
+            return;
+        }
+
+        if (isFavorite) await removeFavorite(productId);
+        else await addFavorite(productId);
+    };
+
+
+
+
 
     return (
         <div className="category-grid">
@@ -17,6 +43,8 @@ const CuartoPage = () => {
                     descripcion={producto.descripcion}
                     variant="horizontal"
                     precio={producto.precio}
+                     isFavorite={favoriteIds.has(String(producto.id))}
+                    onFavoriteClick={handleFavoriteClick}
                 />
             ))}
         </div>

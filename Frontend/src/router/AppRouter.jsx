@@ -10,7 +10,7 @@ import CuartoPage from "../views/CuartoPage";
 import BanioPage from "../views/BanioPage";
 import OficinaPage from "../views/OficinaPage";
 import DecoracionPage from "../views/DecoracionPage";
-import PagoPage from "../views/PagoPage";
+import AutencicacioPage from "../views/AutenticacionPage";
 import ConfirmacionPage from "../views/ConfirmacionPage";
 import NotFoundPage from "../views/NotFoundPage";
 
@@ -37,6 +37,8 @@ export default function AppRouter() {
           <Route path="/decoracion" element={<DecoracionPage />} />
           <Route path="/pago" element={<PagoPage />} />
 
+          <Route path="/acceso" element={<AutencicacioPage />} />
+          <Route path="/favoritos" element={<FavoritosPage />} />
           <Route path="/confirmacion" element={<ConfirmacionPage />} />
 
 

@@ -115,7 +115,7 @@ ul {
   width: 100%;
   height: 100%;
   min-height: 600px;
-  background-image: url("/inicio.png");
+  background-image: url("../src/assets/imgs/inicio.png");
   background-size: cover;
   background-position: center;
 }
@@ -589,21 +589,21 @@ ul {
 
 .card-image {
   width: 100%;
-  height: 260px;
+  display: block;
+  height: 220px;
   object-fit: cover;
   object-position: center;
   background-color: #f9f9f9;
 }
 
+
 .card-nombre {
-  margin: 12px 16px 4px;
   font-size: 18px;
   font-weight: 700;
   color: #333;
 }
 
 .card-descripcion {
-  margin: 0 16px 12px;
   font-size: 14px;
   color: #666;
   flex-grow: 1;
@@ -700,7 +700,7 @@ ul {
   gap: 24px;
   width: 100%;
   max-width: 1000px;
-  margin: 30px auto;
+  margin: 40px auto;
   padding: 0 16px;
 }
 
@@ -710,7 +710,27 @@ ul {
   }
 }
 
-/* HOME PAGE CARDS  */
+/* CARDS HORIZONTALES  */
+
+.img-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  border-radius: 999px;
+  padding: 6px;
+  cursor: pointer;
+}
+
+
 .card.horizontal {
   flex-direction: row;
   width: 100%;
@@ -719,30 +739,24 @@ ul {
   align-items: stretch;
 }
 
-/* El contenedor es el hijo flexible directo ahora */
-.card.horizontal .card-image-container {
-  width: 50%;
-  min-height: 100%;
-  padding: 0;
-  /* Asegurar 0 padding */
-  display: flex;
+.card.horizontal .img-wrapper {
+  height: 100%;
+  flex: 0 0 40%;
 }
 
 .card.horizontal .card-image {
   width: 100%;
   height: 100%;
+  min-height: 220px;
   object-fit: cover;
-  /* Llena todo el espacio sin bordes blancos */
-  object-position: center;
 }
 
-.card.horizontal .card-content {
+.card-content {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  /* Un poco más de aire */
-  width: 50%;
-  justify-content: space-between;
+  padding: 8px 8px;
+  height: 100%;
+  width: 60%;
 }
 
 .card.horizontal .card-nombre {
@@ -767,30 +781,41 @@ ul {
 .card.horizontal .card-precio {
   margin: 0 0 16px 0;
   font-size: 18px;
-  font-weight: 700;
+  height: 20px;
+
 }
 
-
+/* CARD VERTICAL HOME  */
+.card.vertical .img-wrapper .heart {
+  top: auto;
+  bottom: 4px;
+  right: 8px;
+}
 
 .card.vertical .card-content {
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 10px;
   width: 100%;
   height: 100%;
-  justify-content: space-between;
+
+}
+
+.card.vertical .heart {
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
 }
 
 .card.vertical .card-nombre {
-  margin: 0 0 8px 0;
-  min-height: auto;
-  /* Allow growth */
+  height: 25px;
+
+
 }
 
 .card.vertical .card-descripcion {
-  margin: 0 0 16px 0;
   font-size: 14px;
-  line-height: 1.4;
+  margin: 15px 0;
 }
 
 .card.vertical .card-precio {
@@ -798,8 +823,6 @@ ul {
   font-size: 18px;
   font-weight: 700;
 }
-
-
 
 
 /* --- CSS PAGO PAGE  --- */
@@ -903,6 +926,38 @@ ul {
   opacity: 0.9;
 }
 
+
+/* CSS FAVORITOS PAGE */
+
+.favoritos-page h1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 20px 0 20px 0;
+
+}
+
+.favoritos-page p {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 20px 0 20px 0;
+
+}
+
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  ;
+  gap: 24px;
+  max-width: 1200px;
+  justify-items: center;
+  margin: 40px auto;
+}
+
+
+
 /* --- FOOTER --- */
 .footer {
   text-align: center;
@@ -920,4 +975,3 @@ ul {
 .footer .direccion {
   color: #1c1c1c;
 }
-

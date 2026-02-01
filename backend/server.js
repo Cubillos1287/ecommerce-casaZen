@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 app.use("/api/auth", authRoutes)
+app.use("/api/favoritos", favoritesRoutes)
 app.use("/api/productos", productRoutes);
 app.use("/api/carrito", cartRoutes);
 app.use("/api/favorites", favoritesRoutes);

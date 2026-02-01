@@ -23,7 +23,7 @@ const Header = () => {
             ) : (
               <>
                 <Link to="/profile" className="auth-link">Perfil</Link>
-
+                <Link to="/favoritos" className="auth-link">Favoritos</Link>
 
 
                 <button
