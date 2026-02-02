@@ -53,7 +53,7 @@ export const CartProvider = ({ children }) => {
                 title: "Inicia Sesión",
                 text: "Debes iniciar sesión para agregar al carrito",
                 icon: "info",
-                confirmButtonText: "Ir al Login"
+                confirmButtonText: "Ir al Login",
             }).then(() => navigate("/login"));
             return;
         }
