@@ -3,6 +3,8 @@ import Swal from "sweetalert2";
 
 export const UserContext = createContext();
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const UserProvider = ({ children }) => {
 
   const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -32,7 +34,7 @@ export const UserProvider = ({ children }) => {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:3000/api/auth/me", {
+        const res = await fetch(`${API_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -56,7 +58,7 @@ export const UserProvider = ({ children }) => {
   //  LOGIN
   const login = async (email, password) => {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/login", {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -96,7 +98,7 @@ export const UserProvider = ({ children }) => {
   // REGISTER
   const register = async (email, password, name = "") => {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/register", {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
@@ -132,7 +134,7 @@ export const UserProvider = ({ children }) => {
   const updateUser = async (updatedData) => {
     if (!token) return null;
     try {
-      const res = await fetch("http://localhost:3000/api/auth/me", {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -189,7 +191,7 @@ export const UserProvider = ({ children }) => {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/favoritos", {
+      const res = await fetch(`${API_URL}/api/favoritos`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -203,7 +205,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const addFavorite = async (productId) => {
-    const res = await fetch("http://localhost:3000/api/favoritos", {
+    const res = await fetch(`${API_URL}/api/favoritos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -237,7 +239,7 @@ export const UserProvider = ({ children }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/api/favoritos/${productId}`,
+        `${import.meta.env.VITE_API_URL}/api/favoritos/${productId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },

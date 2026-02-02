@@ -1,30 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ProductCard from "../components/ProductCard";
+import { ProductContext } from "../context/ProductContext";
 import Swal from "sweetalert2";
 
 function PublicacionesPage() {
+  const { products, getProducts } = useContext(ProductContext);
   const [publicaciones, setPublicaciones] = useState([]);
 
   useEffect(() => {
-    const fetchProductos = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/api/productos");
-        if (res.ok) {
-          const data = await res.json();
-          // Desordenar aleatoriamente
-          setPublicaciones(data.sort(() => Math.random() - 0.5));
-        } else {
-          console.error("Error al obtener productos");
-          Swal.fire("Error", "No se pudieron cargar las publicaciones", "error");
-        }
-      } catch (error) {
-        console.error(error);
-        Swal.fire("Error", "Error de conexión", "error");
-      }
-    };
-
-    fetchProductos();
+    // Si no hay productos cargados, los pedimos (aunque el context ya debería tenerlos)
+    getProducts();
   }, []);
+
+  useEffect(() => {
+    if (products && products.length > 0) {
+      // Desordenar aleatoriamente una copia para no afectar el estado global
+      const shuffled = [...products].sort(() => Math.random() - 0.5);
+      setPublicaciones(shuffled);
+    }
+  }, [products]);
 
   return (
     <div className="product-card">

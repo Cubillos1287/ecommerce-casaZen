@@ -4,11 +4,13 @@ import { UserContext } from "../context/UserContext";
 import { ProductContext } from "../context/ProductContext"; // Importar contexto de productos
 import Swal from "sweetalert2";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ProductFormPage = () => {
     const { id } = useParams(); // Si existe id, es edición
     const navigate = useNavigate();
     const { token, user } = useContext(UserContext);
-    const { getProducts } = useContext(ProductContext); // Obtener función para refrescar
+    const { getProducts, createProduct, updateProduct, getProductById } = useContext(ProductContext); // Obtener función para refrescar
 
     const isEditing = !!id;
 
@@ -27,25 +29,20 @@ const ProductFormPage = () => {
     useEffect(() => {
         if (isEditing) {
             const fetchProduct = async () => {
-                try {
-                    const res = await fetch(`http://localhost:3000/api/productos/${id}`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        setFormData({
-                            nombre: data.nombre,
-                            descripcion: data.descripcion || "",
-                            precio: data.precio,
-                            categoria: data.categoria,
-                            stock: data.stock,
-                            img: data.img || ""
-                        });
-                    } else {
-                        Swal.fire("Error", "No se pudo cargar el producto", "error");
-                        navigate("/");
-                    }
-                } catch (error) {
-                    console.error(error);
-                    Swal.fire("Error", "Error de conexión", "error");
+                const result = await getProductById(id);
+                if (result.success) {
+                    const data = result.product;
+                    setFormData({
+                        nombre: data.nombre,
+                        descripcion: data.descripcion || "",
+                        precio: data.precio,
+                        categoria: data.categoria,
+                        stock: data.stock,
+                        img: data.img || ""
+                    });
+                } else {
+                    Swal.fire("Error", result.message, "error");
+                    navigate("/");
                 }
             };
             fetchProduct();
@@ -73,42 +70,26 @@ const ProductFormPage = () => {
             setLoading(false);
             return;
         }
-
-        const url = isEditing
-            ? `http://localhost:3000/api/productos/${id}`
-            : `http://localhost:3000/api/productos`;
-
-        const method = isEditing ? "PUT" : "POST";
-
-        try {
-            const res = await fetch(url, {
-                method,
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(formData)
-            });
-
-            if (res.ok) {
-                Swal.fire({
-                    icon: "success",
-                    title: `Producto ${isEditing ? "actualizado" : "creado"}`,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                await getProducts(); // Refrescar lista de productos
-                navigate("/"); // O a la vista del producto
-            } else {
-                const errorData = await res.json();
-                Swal.fire("Error", errorData.message || "Hubo un error", "error");
-            }
-        } catch (error) {
-            console.error(error);
-            Swal.fire("Error", "Error al conectar con el servidor", "error");
-        } finally {
-            setLoading(false);
+        formData.categoria = formData.categoria.toLowerCase();
+        let result;
+        if (isEditing) {
+            result = await updateProduct(id, formData, token);
+        } else {
+            result = await createProduct(formData, token);
         }
+
+        if (result.success) {
+            Swal.fire({
+                icon: "success",
+                title: `Producto ${isEditing ? "actualizado" : "creado"}`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+            navigate("/");
+        } else {
+            Swal.fire("Error", result.message, "error");
+        }
+        setLoading(false);
     };
 
     return (

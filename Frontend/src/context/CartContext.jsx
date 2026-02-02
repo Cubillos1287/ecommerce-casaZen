@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 
 export const CartContext = createContext();
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useCart = () => {
     const context = useContext(CartContext);
     if (!context) {
@@ -27,7 +29,7 @@ export const CartProvider = ({ children }) => {
 
     const fetchCart = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/carrito", {
+            const response = await fetch(`${API_URL}/api/carrito`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -71,13 +73,13 @@ export const CartProvider = ({ children }) => {
             // No, mejor MODIFICAMOS fetch para guardar el cartId.
             // Pero para hacerlo rápido sin cambiar todo el estado 'cart' (que es array), usaré una variable auxiliar o haré fetch dentro.
 
-            const cartRes = await fetch("http://localhost:3000/api/carrito", {
+            const cartRes = await fetch(`${API_URL}/api/carrito`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const cartData = await cartRes.json();
             const cartId = cartData.id;
 
-            const response = await fetch("http://localhost:3000/api/carrito/agregar", {
+            const response = await fetch(`${API_URL}/api/carrito/agregar`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -122,13 +124,13 @@ export const CartProvider = ({ children }) => {
             // Qué molestia pedir cartId en body para un delete param.
             // Lo haré igual.
 
-            const cartRes = await fetch("http://localhost:3000/api/carrito", {
+            const cartRes = await fetch(`${API_URL}/api/carrito`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const cartData = await cartRes.json();
             const cartId = cartData.id;
 
-            const response = await fetch(`http://localhost:3000/api/carrito/${productId}`, {
+            const response = await fetch(`${API_URL}/api/carrito/${productId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
@@ -150,13 +152,13 @@ export const CartProvider = ({ children }) => {
     const decreaseQuantity = async (productId) => {
         if (!token) return;
         try {
-            const cartRes = await fetch("http://localhost:3000/api/carrito", {
+            const cartRes = await fetch(`${API_URL}/api/carrito`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const cartData = await cartRes.json();
             const cartId = cartData.id;
 
-            const response = await fetch("http://localhost:3000/api/carrito/eliminar", {
+            const response = await fetch(`${API_URL}/api/carrito/eliminar`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -179,13 +181,13 @@ export const CartProvider = ({ children }) => {
     const checkout = async () => {
         if (!token) return;
         try {
-            const cartRes = await fetch("http://localhost:3000/api/carrito", {
+            const cartRes = await fetch(`${API_URL}/api/carrito`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const cartData = await cartRes.json();
             const cartId = cartData.id;
 
-            const response = await fetch("http://localhost:3000/api/carrito/checkout", {
+            const response = await fetch(`${API_URL}/api/carrito/checkout`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
