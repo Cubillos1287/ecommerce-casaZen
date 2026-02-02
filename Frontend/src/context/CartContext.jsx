@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom"; 
 
 export const CartContext = createContext();
-const navigate = useNavigate();
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useCart = () => {
@@ -18,6 +17,8 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const { token, user } = useContext(UserContext);
+    const navigate = useNavigate();
+
 
     // Cargar carrito desde Backend
     useEffect(() => {
