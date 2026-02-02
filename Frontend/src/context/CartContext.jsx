@@ -17,8 +17,6 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const { token, user } = useContext(UserContext);
-    const navigate = useNavigate();
-
 
     // Cargar carrito desde Backend
     useEffect(() => {
