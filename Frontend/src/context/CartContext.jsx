@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom"; 
 
 export const CartContext = createContext();
-
+const navigate = useNavigate();
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const useCart = () => {
