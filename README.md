@@ -2,6 +2,10 @@
 
 Aplicación web de **e-commerce full stack** desarrollada con **React (Vite)** en el frontend y **Node.js + PostgreSQL** en el backend. La plataforma cuenta con autenticación de usuarios, control de acceso mediante vistas públicas y privadas, y funcionalidades restringidas según el estado de sesión.
 
+## 🔗 Deploy
+- **Frontend:** [https://ecommerce-casa-zen.vercel.app](https://ecommerce-casa-zen.vercel.app)
+- **Backend:** [https://ecommerce-casazen.onrender.com](https://ecommerce-casazen.onrender.com)
+
 ---
 
 ## 🚀 Tecnologías utilizadas
@@ -60,6 +64,10 @@ English ✨✨
 # 🛒 E-commerce Web App
 
 A full stack e-commerce web application built with **React (Vite)** on the frontend and **Node.js + PostgreSQL** on the backend. The platform includes user authentication, access control through public and private views, and session-based restricted functionalities.
+
+## 🔗 Deploy
+- **Frontend:** [https://ecommerce-casa-zen.vercel.app](https://ecommerce-casa-zen.vercel.app)
+- **Backend:** [https://ecommerce-casazen.onrender.com](https://ecommerce-casazen.onrender.com)
 
 ---
 
