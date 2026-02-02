@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { UserContext } from "./UserContext";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom"; 
 
 export const CartContext = createContext();
 
@@ -53,7 +54,7 @@ export const CartProvider = ({ children }) => {
                 text: "Debes iniciar sesión para agregar al carrito",
                 icon: "info",
                 confirmButtonText: "Ir al Login"
-            });
+            }).then(() => navigate("/login"));
             return;
         }
 
