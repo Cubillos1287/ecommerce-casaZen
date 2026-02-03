@@ -95,9 +95,32 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  // Función para eliminar producto
+  const deleteProduct = async (id, token) => {
+    try {
+      const res = await fetch(`${API_URL}/api/productos/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (res.ok) {
+        await getProducts(); // Refrescar lista
+        return { success: true };
+      } else {
+        const errorData = await res.json();
+        return { success: false, message: errorData.message || "Error al eliminar producto" };
+      }
+    } catch (error) {
+      console.error("Error deleteProduct:", error);
+      return { success: false, message: "Error de conexión" };
+    }
+  };
+
   //  Compartimos los productos con toda la app
   return (
-    <ProductContext.Provider value={{ products, getProducts, createProduct, updateProduct, getProductById }}>
+    <ProductContext.Provider value={{ products, getProducts, createProduct, updateProduct, getProductById, deleteProduct }}>
       {children}
     </ProductContext.Provider>
   );

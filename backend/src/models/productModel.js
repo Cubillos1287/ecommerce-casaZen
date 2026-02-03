@@ -26,8 +26,16 @@ export const actualizaProducto = async (id, nombre, precio, stock, categoria, im
     return rows[0];
 }
 
+export const obtenerProductoEnCarrito = async (id) => {
+    const { rows } = await pool.query('SELECT * FROM cart_items WHERE product_id = $1', [id]);
+    return rows.length > 0;
+}
+
 export const eliminarProducto = async (id) => {
     const { rows } = await pool.query('DELETE FROM products WHERE id = $1 RETURNING *', [id]);
+    if (rows.length === 0) {
+        return null;
+    }
     return rows[0];
 }
 

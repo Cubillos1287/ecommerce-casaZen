@@ -10,7 +10,7 @@ const ProductFormPage = () => {
     const { id } = useParams(); // Si existe id, es edición
     const navigate = useNavigate();
     const { token, user } = useContext(UserContext);
-    const { getProducts, createProduct, updateProduct, getProductById } = useContext(ProductContext); // Obtener función para refrescar
+    const { getProducts, createProduct, updateProduct, getProductById, deleteProduct } = useContext(ProductContext); // Obtener función para refrescar
 
     const isEditing = !!id;
 
@@ -90,6 +90,32 @@ const ProductFormPage = () => {
             Swal.fire("Error", result.message, "error");
         }
         setLoading(false);
+    };
+
+    const handleDelete = async () => {
+        const confirm = await Swal.fire({
+            title: "¿Estás seguro?",
+            text: "Esta acción no se puede deshacer.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+        });
+
+        if (confirm.isConfirmed) {
+            setLoading(true);
+            const result = await deleteProduct(id, token);
+            setLoading(false);
+
+            if (result.success) {
+                Swal.fire("Eliminado", "El producto ha sido eliminado.", "success");
+                navigate("/");
+            } else {
+                Swal.fire("Error", result.message, "error");
+            }
+        }
     };
 
     return (
@@ -191,9 +217,23 @@ const ProductFormPage = () => {
                             </select>
                         </div>
 
-                        <button type="submit" className="cart-pay-btn" style={{ marginTop: "20px" }} disabled={loading}>
-                            {loading ? "Guardando..." : "Publicar"}
-                        </button>
+                        <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+                            <button type="submit" className="cart-pay-btn" style={{ flex: 1 }} disabled={loading}>
+                                {loading ? "Guardando..." : (isEditing ? "Guardar Cambios" : "Publicar")}
+                            </button>
+
+                            {isEditing && (
+                                <button
+                                    type="button"
+                                    onClick={handleDelete}
+                                    className="cart-pay-btn"
+                                    style={{ flex: 0.5, background: "#dc3545", borderColor: "#dc3545" }}
+                                    disabled={loading}
+                                >
+                                    Eliminar
+                                </button>
+                            )}
+                        </div>
                     </form>
                 </div>
             </div>

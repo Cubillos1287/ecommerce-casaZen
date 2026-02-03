@@ -3,7 +3,9 @@ import {
     obtenerProductoPorId,
     obtenerProductoPorCategoria,
     agregarProducto as crearProductoModel,
-    actualizaProducto as actualizarProductoModel
+    actualizaProducto as actualizarProductoModel,
+    eliminarProducto as eliminarProductoModel,
+    obtenerProductoEnCarrito
 } from '../models/productModel.js';
 
 
@@ -72,5 +74,32 @@ export const actualizarProducto = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error al actualizar el producto" });
+    }
+}
+
+export const borrarProducto = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // 1. Verificar si el producto está en algún carrito
+        const productoEnUso = await obtenerProductoEnCarrito(id);
+        if (productoEnUso) {
+            return res.status(409).json({
+                message: "No se puede eliminar, el producto está en un carrito activo de algún cliente."
+            });
+        }
+
+        // 2. Si no está en uso, borrar
+        const productoEliminado = await eliminarProductoModel(id);
+
+        if (!productoEliminado) {
+            return res.status(404).json({ message: "Producto no encontrado" });
+        }
+
+        res.json({ message: "Producto eliminado correctamente", producto: productoEliminado });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al eliminar el producto" });
     }
 }
